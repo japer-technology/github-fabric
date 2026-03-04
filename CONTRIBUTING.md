@@ -1,8 +1,8 @@
-# Contributing to GitHub Minimum Intelligence
+# Contributing to GitHub Fabric
 
 Thank you for your interest in contributing. This project values transparency, auditability, and human judgment above all else. Every contribution — code, documentation, or discussion — becomes part of the repository's permanent history.
 
-Before contributing, please read [Before You Begin](.github-minimum-intelligence/docs/final-warning.md) and the [Four Laws of AI](.github-minimum-intelligence/docs/the-four-laws-of-ai.md).
+Before contributing, please read [Before You Begin](.github-fabric/docs/final-warning.md) and the [Four Laws of AI](.github-fabric/docs/the-four-laws-of-ai.md).
 
 ---
 
@@ -23,7 +23,7 @@ Open a [GitHub Issue](../../issues) describing:
 
 - The problem or gap the feature addresses.
 - How it fits within the existing architecture (issues as conversation, Git as memory, Actions as runtime).
-- Any security implications — review the [Capabilities Analysis](.github-minimum-intelligence/docs/warning-blast-radius.md) to understand the access model.
+- Any security implications — review the [Capabilities Analysis](.github-fabric/docs/warning-blast-radius.md) to understand the access model.
 
 ### Submitting Changes
 
@@ -31,7 +31,7 @@ Open a [GitHub Issue](../../issues) describing:
 2. Make your changes in small, reviewable increments.
 3. Test locally with `bun install` and verify the installer runs cleanly:
    ```bash
-   bun .github-minimum-intelligence/install/MINIMUM-INTELLIGENCE-INSTALLER.ts
+   bun .github-fabric/install/FABRIC-INSTALLER.ts
    ```
 4. Open a pull request with a clear description of what changed and why.
 
@@ -40,7 +40,7 @@ Open a [GitHub Issue](../../issues) describing:
 ## Project Structure
 
 ```
-.github-minimum-intelligence/       # Core agent framework
+.github-fabric/       # Core agent framework
   .pi/                              # Agent personality, skills, and LLM config
   install/                          # Setup scripts and workflow templates
   lifecycle/                        # Agent orchestrator and runtime hooks
@@ -59,7 +59,7 @@ See the [README](README.md#project-structure) for a detailed breakdown of every 
 2. Clone the repository.
 3. Install dependencies:
    ```bash
-   cd .github-minimum-intelligence && bun install
+   cd .github-fabric && bun install
    ```
 4. Add an LLM API key as a repository secret (see [Supported Providers](README.md#supported-providers)).
 
@@ -69,16 +69,16 @@ See the [README](README.md#project-structure) for a detailed breakdown of every 
 
 - **Documentation** is Markdown. Use tables, clear headings, and concise language consistent with existing files.
 - **Code** is TypeScript, executed with Bun.
-- **Skills** are self-contained Markdown files in `.github-minimum-intelligence/.pi/skills/`.
+- **Skills** are self-contained Markdown files in `.github-fabric/.pi/skills/`.
 - **Commit messages** should be short and descriptive. Every commit is permanent and auditable.
 
 ---
 
 ## Security
 
-If you discover a security vulnerability, **do not open a public issue**. Instead, refer to the [Incident Response](.github-minimum-intelligence/docs/incident-response.md) plan and contact the maintainers privately.
+If you discover a security vulnerability, **do not open a public issue**. Instead, refer to the [Incident Response](.github-fabric/docs/incident-response.md) plan and contact the maintainers privately.
 
-All contributions are subject to the project's [Security Assessment](.github-minimum-intelligence/docs/security-assessment.md) and [Capabilities Analysis](.github-minimum-intelligence/docs/warning-blast-radius.md). Changes that expand the agent's capabilities or permissions require careful review.
+All contributions are subject to the project's [Security Assessment](.github-fabric/docs/security-assessment.md) and [Capabilities Analysis](.github-fabric/docs/warning-blast-radius.md). Changes that expand the agent's capabilities or permissions require careful review.
 
 ---
 

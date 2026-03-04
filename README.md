@@ -1,4 +1,4 @@
-# GitHub Minimum Intelligence
+# GitHub Fabric
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) ![AI](https://img.shields.io/badge/Assisted-Development-2b2bff?logo=openai&logoColor=white) 
 
@@ -10,7 +10,7 @@ A repository-local AI framework that plugs into a developer’s existing workflo
 
 <p align="center">
   <picture>
-    <img src="https://raw.githubusercontent.com/japer-technology/github-minimum-intelligence/main/.github-minimum-intelligence/logo.png" alt="Minimum Intelligence" width="500">
+    <img src="https://raw.githubusercontent.com/japer-technology/github-fabric/main/.github-fabric/logo.png" alt="GitHub Fabric" width="500">
   </picture>
 </p>
 
@@ -18,19 +18,19 @@ A repository-local AI framework that plugs into a developer’s existing workflo
 
 ## IMPORTANT
 
-### Please read [Before You Begin](.github-minimum-intelligence/docs/final-warning.md) for important usage information.
+### Please read [Before You Begin](.github-fabric/docs/final-warning.md) for important usage information.
 
-See the [Index](.github-minimum-intelligence/docs/index.md) for all documentation.
+See the [Index](.github-fabric/docs/index.md) for all documentation.
 
 ---
 
 ## An AI agent that lives in your GitHub Repo
 
-[![github-minimum-intelligence-agent](https://github.com/japer-technology/github-minimum-intelligence/actions/workflows/github-minimum-intelligence-agent.yml/badge.svg)](https://github.com/japer-technology/github-minimum-intelligence/actions/workflows/github-minimum-intelligence-agent.yml)
+[![github-fabric-agent](https://github.com/japer-technology/github-fabric/actions/workflows/github-fabric-agent.yml/badge.svg)](https://github.com/japer-technology/github-fabric/actions/workflows/github-fabric-agent.yml)
 
 Powered by [pi](https://github.com/badlogic/pi-mono) conversation history is committed to git, giving your agent long-term memory across sessions. It can search prior context, edit or summarize past conversations, and all changes are versioned.
 
-Drop a single `.github-minimum-intelligence` folder into any repo and you have a fully functional AI agent. Every GitHub issue becomes a conversation thread. The agent reads your message, thinks, responds, and commits its work - all inside your repository.
+Drop a single `.github-fabric` folder into any repo and you have a fully functional AI agent. Every GitHub issue becomes a conversation thread. The agent reads your message, thinks, responds, and commits its work - all inside your repository.
 
 > **Quick-start**: An `OPENAI_API_KEY` secret is all you need - but any [supported LLM provider](#supported-providers) works.
 
@@ -51,7 +51,7 @@ This is a proof that a full AI agent can live as a single folder in any GitHub r
 
 With a typical LLM, every question you ask and every answer you receive lives on _someone else's_ platform. You copy code out of a chat window, paste it into your editor, and hope you grabbed the right version. The knowledge you build up is trapped in a third-party service - scattered across browser tabs and chat logs you'll never find again.
 
-**Minimum Intelligence flips that model.** Every prompt you write and every response the agent produces is committed directly to your repository as part of its normal workflow. There is nothing to copy, nothing to paste, and nothing stored outside your control.
+**GitHub Fabric flips that model.** Every prompt you write and every response the agent produces is committed directly to your repository as part of its normal workflow. There is nothing to copy, nothing to paste, and nothing stored outside your control.
 
 - **Ask a question** → the answer is already in your repo.
 - **Request a file change** → the agent commits the edit for you.
@@ -67,22 +67,22 @@ Get an AI agent running in any GitHub repo in under 5 minutes:
 
 ```bash
 # From the root of any git repository
-curl -fsSL https://raw.githubusercontent.com/japer-technology/github-minimum-intelligence/main/setup.sh | bash
+curl -fsSL https://raw.githubusercontent.com/japer-technology/github-fabric/main/setup.sh | bash
 ```
 
 Then:
 
 1. Add your LLM API key as a repository secret ([details below](#add-your-api-key)).
-2. `git add -A && git commit -m "Add minimum-intelligence" && git push`
+2. `git add -A && git commit -m "Add fabric" && git push`
 3. Open an issue - the agent replies automatically.
 
 ---
 
-## Why GitHub Minimum Intelligence
+## Why GitHub Fabric
 
 | Capability | Why it matters |
 |---|---|
-| **Single folder, any repo** | Copy `.github-minimum-intelligence/` in and run the install script. Nothing to host or maintain. |
+| **Single folder, any repo** | Copy `.github-fabric/` in and run the install script. Nothing to host or maintain. |
 | **Zero infrastructure** | Runs on GitHub Actions with your repo as the only backend. |
 | **Persistent memory** | Conversations are committed to git - the agent remembers everything across sessions. |
 | **Full auditability** | Every interaction is versioned; review or roll back any change the agent made. |
@@ -144,7 +144,7 @@ A technical framework designed to integrate a repository-local AI agent directly
 All state lives in the repo:
 
 ```
-.github-minimum-intelligence/state/
+.github-fabric/state/
   issues/
     1.json          # maps issue #1 → its session file
   sessions/
@@ -165,7 +165,7 @@ Each issue number is a stable conversation key - `issue #N` → `state/issues/N.
 
 ## Installation Methods
 
-There are three ways to add Minimum Intelligence to a repository. Pick whichever fits your workflow.
+There are three ways to add GitHub Fabric to a repository. Pick whichever fits your workflow.
 
 | Method | Best for | GitHub App identity? |
 |--------|----------|---------------------|
@@ -180,24 +180,24 @@ There are three ways to add Minimum Intelligence to a repository. Pick whichever
 Run a single command from the **root of any git repository**:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/japer-technology/github-minimum-intelligence/main/setup.sh | bash
+curl -fsSL https://raw.githubusercontent.com/japer-technology/github-fabric/main/setup.sh | bash
 ```
 
-This downloads the `.github-minimum-intelligence/` folder, copies the workflow and issue templates into `.github/`, and installs dependencies.
+This downloads the `.github-fabric/` folder, copies the workflow and issue templates into `.github/`, and installs dependencies.
 
 After it finishes:
 
 1. Add your LLM API key as a repository secret (see [step 3 below](#add-your-api-key)).
-2. `git add -A && git commit -m "Add minimum-intelligence" && git push`
+2. `git add -A && git commit -m "Add fabric" && git push`
 3. Open an issue - the agent replies automatically.
 
 <details>
 <summary>Prefer to download manually?</summary>
 
-Download the [latest zip](https://github.com/japer-technology/github-minimum-intelligence/archive/refs/heads/main.zip), extract it, copy the `.github-minimum-intelligence/` folder into your repo root, then run:
+Download the [latest zip](https://github.com/japer-technology/github-fabric/archive/refs/heads/main.zip), extract it, copy the `.github-fabric/` folder into your repo root, then run:
 
 ```bash
-bun .github-minimum-intelligence/install/MINIMUM-INTELLIGENCE-INSTALLER.ts
+bun .github-fabric/install/FABRIC-INSTALLER.ts
 ```
 
 </details>
@@ -208,12 +208,12 @@ bun .github-minimum-intelligence/install/MINIMUM-INTELLIGENCE-INSTALLER.ts
 
 If you want full control over every file:
 
-**1. Add minimum-intelligence to your repo**
+**1. Add fabric to your repo**
 
-Copy the `.github-minimum-intelligence` folder into your repository root, then run the install script:
+Copy the `.github-fabric` folder into your repository root, then run the install script:
 
 ```bash
-bun .github-minimum-intelligence/install/MINIMUM-INTELLIGENCE-INSTALLER.ts
+bun .github-fabric/install/FABRIC-INSTALLER.ts
 ```
 
 This sets up the GitHub Actions workflow and issue templates.
@@ -221,7 +221,7 @@ This sets up the GitHub Actions workflow and issue templates.
 **2. Install dependencies**
 
 ```bash
-cd .github-minimum-intelligence && bun install
+cd .github-fabric && bun install
 ```
 
 **3. Add your API key** {#add-your-api-key}
@@ -242,7 +242,7 @@ In your GitHub repo, go to **Settings → Secrets and variables → Actions** an
 
 ```bash
 git add -A
-git commit -m "Add minimum-intelligence"
+git commit -m "Add fabric"
 git push
 ```
 
@@ -256,7 +256,7 @@ That's it. The agent replies as a comment on the issue.
 
 ### Method 3: GitHub App
 
-Running minimum-intelligence as a **GitHub App** gives it its own bot identity, consistent permissions across repositories, and a path toward multi-repo installation without copy-pasting files.
+Running fabric as a **GitHub App** gives it its own bot identity, consistent permissions across repositories, and a path toward multi-repo installation without copy-pasting files.
 
 <details>
 <summary><strong>How the GitHub App manifest flow works</strong></summary>
@@ -320,7 +320,7 @@ In the repository where the agent workflow lives, go to **Settings → Secrets a
 
 Go to the app's **Install** page (linked from its settings) and install it on the repositories where you want the agent to respond to issues. The app needs **read/write** access to **Issues**, **Contents**, and **Actions**.
 
-When the App is installed on a new repository, the `github-minimum-intelligence-installation` workflow automatically creates a welcome issue with setup instructions.
+When the App is installed on a new repository, the `github-fabric-installation` workflow automatically creates a welcome issue with setup instructions.
 
 #### 4. Add your LLM API key
 
@@ -328,7 +328,7 @@ In each target repo, go to **Settings → Secrets and variables → Actions** an
 
 #### Quick start after installing the GitHub App
 
-After installing the App on a repo that already has the `.github-minimum-intelligence/` folder, just open an issue - the agent is ready. If the repo does not have the folder yet, run the [quick setup script](#method-1-quick-setup-script) first.
+After installing the App on a repo that already has the `.github-fabric/` folder, just open an issue - the agent is ready. If the repo does not have the folder yet, run the [quick setup script](#method-1-quick-setup-script) first.
 
 ---
 
@@ -357,17 +357,17 @@ This is optional. The agent works without hatching, but it's more fun with a per
 ## Project Structure
 
 ```
-.github-minimum-intelligence/
+.github-fabric/
   .pi/                              # Agent personality & skills config
     settings.json                   # LLM provider, model, and thinking level
     APPEND_SYSTEM.md                # System prompt loaded every session
     BOOTSTRAP.md                    # First-run identity prompt
     skills/                         # Modular skill packages
   install/
-    MINIMUM-INTELLIGENCE-INSTALLER.ts            # Setup script - installs workflows & templates
-    github-minimum-intelligence-agent.yml         # GitHub Actions workflow template
-    github-minimum-intelligence-hatch.md          # Issue template for personality hatching
-    MINIMUM-INTELLIGENCE-AGENTS.md               # Default agent identity template (copied to AGENTS.md on install)
+    FABRIC-INSTALLER.ts            # Setup script - installs workflows & templates
+    github-fabric-agent.yml         # GitHub Actions workflow template
+    github-fabric-hatch.md          # Issue template for personality hatching
+    FABRIC-AGENTS.md               # Default agent identity template (copied to AGENTS.md on install)
     package.json                    # Installer dependencies
   lifecycle/
     agent.ts                # Core agent orchestrator
@@ -377,13 +377,13 @@ This is optional. The agent works without hatching, but it's more fun with a per
   package.json                      # Runtime dependencies
 ```
 
-Additionally, [`setup.sh`](./setup.sh) at the repo root provides a one-command installer for adding minimum-intelligence to any repository (see [Quick Setup Script](#method-1-quick-setup-script)).
+Additionally, [`setup.sh`](./setup.sh) at the repo root provides a one-command installer for adding fabric to any repository (see [Quick Setup Script](#method-1-quick-setup-script)).
 
 ---
 
 ## Configuration
 
-**Change the model** - edit `.github-minimum-intelligence/.pi/settings.json`:
+**Change the model** - edit `.github-fabric/.pi/settings.json`:
 
 <details>
 <summary><strong>OpenAI - GPT-5.3 Codex (default)</strong></summary>
@@ -555,7 +555,7 @@ Requires `OPENROUTER_API_KEY`. Browse available models at [openrouter.ai](https:
 
 **Make it read-only** - add `--tools read,grep,find,ls` to the agent args in `lifecycle/agent.ts`.
 
-**Filter by label** - edit `.github/workflows/github-minimum-intelligence-agent.yml` to only trigger on issues with a specific label.
+**Filter by label** - edit `.github/workflows/github-fabric-agent.yml` to only trigger on issues with a specific label.
 
 **Adjust thinking level** - set `defaultThinkingLevel` to `"low"`, `"medium"`, or `"high"` in `settings.json` for different task complexities.
 
@@ -563,7 +563,7 @@ Requires `OPENROUTER_API_KEY`. Browse available models at [openrouter.ai](https:
 
 ## Supported Providers
 
-`.pi` supports a wide range of LLM providers out of the box. Set `defaultProvider` and `defaultModel` in `.github-minimum-intelligence/.pi/settings.json` and add the matching API key to your workflow:
+`.pi` supports a wide range of LLM providers out of the box. Set `defaultProvider` and `defaultModel` in `.github-fabric/.pi/settings.json` and add the matching API key to your workflow:
 
 | Provider | `defaultProvider` | Example model | API key env var |
 |----------|-------------------|---------------|-----------------|
@@ -584,7 +584,7 @@ Requires `OPENROUTER_API_KEY`. Browse available models at [openrouter.ai](https:
 
 The workflow only responds to repository **owners, members, and collaborators**. Random users cannot trigger the agent on public repos.
 
-If you plan to use minimum-intelligence for anything private, **make the repo private**. Public repos mean your conversation history is visible to everyone, but get generous GitHub Actions usage.
+If you plan to use fabric for anything private, **make the repo private**. Public repos mean your conversation history is visible to everyone, but get generous GitHub Actions usage.
 
 ---
 
@@ -596,6 +596,6 @@ The repo is overwhelmingly dominated by node_modules (~99%). The actual project 
 
 <p align="center">
   <picture>
-    <img src="https://raw.githubusercontent.com/japer-technology/github-minimum-intelligence/main/.github-minimum-intelligence/logo.png" alt="Minimum Intelligence" width="500">
+    <img src="https://raw.githubusercontent.com/japer-technology/github-fabric/main/.github-fabric/logo.png" alt="GitHub Fabric" width="500">
   </picture>
 </p>
