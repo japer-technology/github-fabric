@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Fabric</title>
+  <meta name="description" content="GitHub Fabric — Weaving Repositories into Infrastructure. A repository-native AI collaboration framework.">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --fg: #e6edf3;
+      --muted: #8b949e;
+      --accent: #58a6ff;
+      --border: #30363d;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 640px;
+      text-align: center;
+    }
+    .logo {
+      width: 220px;
+      height: auto;
+      margin-bottom: 1.5rem;
+    }
+    h1 {
+      font-size: 2.25rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .tagline {
+      font-size: 1.1rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+    .description {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+    }
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+    .links a {
+      display: inline-block;
+      padding: 0.6rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .links a:hover {
+      background: rgba(88, 166, 255, 0.1);
+      border-color: var(--accent);
+    }
+    footer {
+      margin-top: 3rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img
+      class="logo"
+      src="https://raw.githubusercontent.com/japer-technology/github-fabric/main/.github-fabric/logo.png"
+      alt="GitHub Fabric logo"
+    >
+    <h1>GitHub Fabric</h1>
+    <p class="tagline">Weaving Repositories into Infrastructure</p>
+    <p class="description">
+      A "GitHub as Infrastructure" meta-repo that ingests upstream repos,
+      splices in controlled modifications, and exposes each as a
+      name-addressable, runnable module — powered by GitHub Actions.
+    </p>
+    <nav class="links">
+      <a href="https://github.com/japer-technology/github-fabric">Repository</a>
+      <a href="https://github.com/japer-technology/github-fabric/blob/main/README.md">Documentation</a>
+      <a href="https://github.com/japer-technology/github-fabric/blob/main/CONTRIBUTING.md">Contributing</a>
+      <a href="https://github.com/japer-technology/github-fabric/blob/main/LICENSE.md">License</a>
+    </nav>
+    <footer>
+      <p>&copy; <a href="https://github.com/japer-technology">JAPER Technology</a></p>
+    </footer>
+  </div>
+</body>
+</html>
