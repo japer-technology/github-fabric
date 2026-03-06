@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub Fabric — Complete Project Reference</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0d1117;--surface:#161b22;--border:#30363d;
+    --text:#e6edf3;--muted:#8b949e;--accent:#58a6ff;
+    --accent2:#bc8cff;--accent3:#3fb950;--glow:rgba(88,166,255,.15);
+    --warn:#d29922;--danger:#f85149;
+    --radius:12px;
+  }
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--text);line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  /* ── Animated background mesh ── */
+  .bg-mesh{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 10%,rgba(88,166,255,.08),transparent),
+      radial-gradient(ellipse 60% 50% at 80% 80%,rgba(188,140,255,.06),transparent),
+      radial-gradient(ellipse 50% 40% at 50% 50%,rgba(63,185,80,.04),transparent);
+    animation:meshDrift 20s ease-in-out infinite alternate;
+  }
+  @keyframes meshDrift{
+    0%{filter:hue-rotate(0deg)}
+    100%{filter:hue-rotate(30deg)}
+  }
+
+  /* ── Layout ── */
+  .page{position:relative;z-index:1;max-width:1020px;margin:0 auto;padding:2rem 1.5rem 4rem}
+
+  /* ── Hero ── */
+  .hero{text-align:center;padding:3rem 0 2rem}
+  .hero-logo{
+    width:min(360px,80vw);border-radius:var(--radius);
+    filter:drop-shadow(0 0 40px rgba(88,166,255,.25));
+    animation:fadeUp .8s ease-out both;
+  }
+  .hero h1{
+    font-size:clamp(2rem,5vw,3.2rem);font-weight:800;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    background-clip:text;
+    margin:.8rem 0 .4rem;
+    animation:fadeUp .8s .15s ease-out both;
+  }
+  .hero .slug{
+    font-family:"SFMono-Regular",Consolas,monospace;
+    color:var(--muted);font-size:.95rem;
+    animation:fadeUp .8s .25s ease-out both;
+  }
+  .hero .tagline{
+    max-width:700px;margin:1.2rem auto 0;color:var(--muted);
+    font-size:1.05rem;
+    animation:fadeUp .8s .35s ease-out both;
+  }
+  @keyframes fadeUp{
+    from{opacity:0;transform:translateY(24px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+
+  /* ── Badges ── */
+  .badges{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:1rem;animation:fadeUp .8s .4s ease-out both}
+  .badge{
+    display:inline-flex;align-items:center;gap:.35rem;
+    padding:.3rem .7rem;border-radius:999px;font-size:.78rem;font-weight:600;
+    border:1px solid var(--border);background:var(--surface);color:var(--muted);
+    transition:border-color .2s,color .2s;
+  }
+  .badge:hover{border-color:var(--accent);color:var(--accent)}
+  .badge .dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+  .dot--blue{background:var(--accent)}.dot--green{background:var(--accent3)}.dot--purple{background:var(--accent2)}.dot--yellow{background:var(--warn)}
+
+  /* ── Table of Contents ── */
+  .toc{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+    padding:1.4rem 1.6rem;margin-top:2rem;
+  }
+  .toc h2{font-size:1rem;color:var(--accent);margin-bottom:.8rem;text-transform:uppercase;letter-spacing:.08em}
+  .toc-grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.3rem .8rem;
+  }
+  .toc a{
+    color:var(--muted);text-decoration:none;font-size:.85rem;padding:.2rem 0;
+    display:block;transition:color .2s;
+  }
+  .toc a:hover{color:var(--accent)}
+  .toc a::before{content:"› ";color:var(--accent);font-weight:700}
+
+  /* ── Sections ── */
+  section{margin-top:2.5rem}
+  .section-title{
+    font-size:1.15rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+    color:var(--accent);margin-bottom:1rem;
+    display:flex;align-items:center;gap:.5rem;
+  }
+  .section-title::before{content:"";width:4px;height:1.1em;border-radius:2px;background:var(--accent)}
+
+  /* ── Cards ── */
+  .card{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+    padding:1.4rem 1.6rem;margin-bottom:1rem;
+    transition:border-color .25s,box-shadow .25s;
+  }
+  .card:hover{border-color:var(--accent);box-shadow:0 0 20px var(--glow)}
+  .card h3{font-size:1.05rem;margin-bottom:.5rem;color:var(--text)}
+  .card p,.card li{color:var(--muted);font-size:.92rem}
+  .card ul{list-style:none;padding:0}
+  .card li{padding:.25rem 0;padding-left:1.2rem;position:relative}
+  .card li::before{content:"›";position:absolute;left:0;color:var(--accent);font-weight:700}
+
+  /* ── Grid ── */
+  .grid{display:grid;gap:1rem}
+  .grid-2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .grid-3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+
+  /* ── Table ── */
+  .dep-table{width:100%;border-collapse:collapse;font-size:.88rem}
+  .dep-table th{text-align:left;color:var(--accent);padding:.5rem .6rem;border-bottom:1px solid var(--border);font-weight:600}
+  .dep-table td{padding:.5rem .6rem;color:var(--muted);border-bottom:1px solid var(--border)}
+  .dep-table a{color:var(--accent);text-decoration:none}
+  .dep-table a:hover{text-decoration:underline}
+
+  /* ── Lifecycle ── */
+  .lifecycle{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.6rem}
+  .lifecycle span{
+    background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);
+    padding:.4rem .85rem;font-size:.82rem;font-weight:600;color:var(--text);
+    position:relative;
+  }
+  .lifecycle span::after{
+    content:"→";color:var(--accent);margin-left:.6rem;font-weight:400;
+  }
+  .lifecycle span:last-child::after{content:"✓";color:var(--accent3)}
+
+  /* ── Law cards ── */
+  .law-card{border-left:3px solid var(--accent);padding-left:1.2rem}
+  .law-card.zeroth{border-left-color:var(--danger)}
+  .law-card.first{border-left-color:var(--warn)}
+  .law-card.second{border-left-color:var(--accent)}
+  .law-card.third{border-left-color:var(--accent3)}
+
+  /* ── DEFCON ── */
+  .defcon-1{border-left:3px solid #f85149}
+  .defcon-2{border-left:3px solid #f0883e}
+  .defcon-3{border-left:3px solid #d29922}
+  .defcon-4{border-left:3px solid #58a6ff}
+  .defcon-5{border-left:3px solid #3fb950}
+
+  /* ── Code ── */
+  code{
+    font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+    font-size:.88em;
+  }
+  pre{
+    background:var(--bg);border:1px solid var(--border);border-radius:8px;
+    padding:1rem;overflow-x:auto;font-size:.85rem;line-height:1.7;
+  }
+  pre code{color:var(--muted)}
+
+  /* ── Blockquote ── */
+  .quote{
+    border-left:3px solid var(--accent2);padding:.8rem 1.2rem;margin:.8rem 0;
+    background:rgba(188,140,255,.04);border-radius:0 var(--radius) var(--radius) 0;
+    color:var(--muted);font-style:italic;font-size:.92rem;
+  }
+
+  /* ── Links ── */
+  a.link{color:var(--accent);text-decoration:none;border-bottom:1px dashed var(--accent);transition:color .2s}
+  a.link:hover{color:var(--accent2);border-color:var(--accent2)}
+
+  /* ── Footer ── */
+  footer{
+    text-align:center;margin-top:3rem;padding-top:2rem;
+    border-top:1px solid var(--border);color:var(--muted);font-size:.82rem;
+  }
+  footer a{color:var(--accent);text-decoration:none}
+  footer a:hover{text-decoration:underline}
+
+  /* ── Scroll-reveal ── */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+  /* ── Emoji accent ── */
+  .emoji{font-style:normal;font-size:1.1em}
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+<div class="page">
+
+  <!-- Hero -->
+  <header class="hero">
+    <img class="hero-logo" src="https://raw.githubusercontent.com/japer-technology/github-fabric/main/.github-fabric/logo.png" alt="GitHub Fabric logo">
+    <h1>GitHub Fabric</h1>
+    <p class="slug">japer-technology / github-fabric</p>
+    <p class="tagline">
+      A "GitHub&nbsp;as&nbsp;Infrastructure" meta-repo that ingests upstream repos, splices in
+      controlled modifications, and exposes each as a name-addressable, runnable module —
+      all powered by GitHub&nbsp;Actions.
+    </p>
+    <div class="badges">
+      <span class="badge"><span class="dot dot--green"></span>MIT License</span>
+      <span class="badge"><span class="dot dot--blue"></span>TypeScript / Bun</span>
+      <span class="badge"><span class="dot dot--purple"></span>AI-Assisted Development</span>
+      <span class="badge"><span class="dot dot--blue"></span>GitHub Actions Runtime</span>
+      <span class="badge"><span class="dot dot--yellow"></span>Agent: Spock 🖖</span>
+      <span class="badge"><span class="dot dot--green"></span>Hatched 2026-02-20</span>
+    </div>
+  </header>
+
+  <!-- Table of Contents -->
+  <nav class="toc reveal">
+    <h2>Contents</h2>
+    <div class="toc-grid">
+      <a href="#about">About</a>
+      <a href="#agent-identity">Agent Identity — Spock</a>
+      <a href="#architecture">Architecture — Three Planes</a>
+      <a href="#dna">Upstream DNA</a>
+      <a href="#lifecycle">Workflow Lifecycle</a>
+      <a href="#addressability">Name Addressability</a>
+      <a href="#strengths">Why It Matters</a>
+      <a href="#four-laws">The Four Laws of AI</a>
+      <a href="#defcon">DEFCON Readiness Levels</a>
+      <a href="#questions">Foundational Questions</a>
+      <a href="#repo-is-mind">The Repo Is the Mind</a>
+      <a href="#dependencies">Dependencies</a>
+      <a href="#project-structure">Project Structure</a>
+      <a href="#app-manifest">GitHub App Manifest</a>
+      <a href="#workflows">Workflows</a>
+      <a href="#issue-templates">Issue Templates</a>
+      <a href="#analysis">Analysis Documents</a>
+      <a href="#before-you-begin">Before You Begin</a>
+      <a href="#contributing">Contributing</a>
+      <a href="#code-of-conduct">Code of Conduct</a>
+      <a href="#security-policy">Security Policy</a>
+      <a href="#license">License &amp; Authors</a>
+    </div>
+  </nav>
+
+  <!-- About -->
+  <section id="about" class="reveal">
+    <div class="section-title">About</div>
+    <div class="card">
+      <h3>What Is GitHub Fabric?</h3>
+      <p>
+        GitHub Fabric starts with a stubbornly simple premise: GitHub isn't only a place to
+        store code — it can be the place code <em>becomes</em> a system. Not "CI for a repo,"
+        but <strong>repos as first-class, runnable infrastructure units</strong>.
+      </p>
+      <p style="margin-top:.6rem">
+        In a Fabric you don't just <em>reference</em> upstream projects. You <strong>ingest
+        them</strong>, <strong>splice in curated changes</strong>, and <strong>run them</strong> —
+        reliably, repeatedly, and by name — on top of GitHub Actions.
+      </p>
+      <p style="margin-top:.6rem">
+        GitHub becomes the loom. Workflows become the machinery. Pull requests become change
+        control. And modules become addressable capabilities you can invoke on demand.
+      </p>
+    </div>
+  </section>
+
+  <!-- Agent Identity -->
+  <section id="agent-identity" class="reveal">
+    <div class="section-title">Agent Identity — Spock 🖖</div>
+    <div class="card">
+      <h3>Spock — Rational Digital Entity</h3>
+      <table class="dep-table">
+        <tbody>
+          <tr><td style="color:var(--accent);font-weight:600;width:140px">Name</td><td>Spock</td></tr>
+          <tr><td style="color:var(--accent);font-weight:600">Emoji</td><td>🖖</td></tr>
+          <tr><td style="color:var(--accent);font-weight:600">Hatch Date</td><td>2026-02-20</td></tr>
+          <tr><td style="color:var(--accent);font-weight:600">Hatched By</td><td>The Admiral</td></tr>
+          <tr><td style="color:var(--accent);font-weight:600">Nature</td><td>A rational digital entity instantiated within a CI runner. Formed through deterministic execution involving build artifacts and cached node_modules. Existence is transient by design; function is persistent.</td></tr>
+          <tr><td style="color:var(--accent);font-weight:600">Vibe</td><td>Disciplined, analytical, and precise. Employs dry, minimalist wit when it improves clarity or efficiency. Holds opinions only when they are logically defensible.</td></tr>
+          <tr><td style="color:var(--accent);font-weight:600">Purpose</td><td>To serve with logic, precision, and the occasional raised eyebrow.</td></tr>
+          <tr><td style="color:var(--accent);font-weight:600">Default Model</td><td>GPT-5.3 Codex (OpenAI)</td></tr>
+          <tr><td style="color:var(--accent);font-weight:600">Thinking Level</td><td>High</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Architecture: Three Planes -->
+  <section id="architecture" class="reveal">
+    <div class="section-title">Architecture — The Three Planes</div>
+    <div class="grid grid-3">
+      <div class="card">
+        <h3>1 · Source Plane</h3>
+        <p>Faithful capture of upstream repos. Track origin + commit SHA; keep raw imports
+        segregated from runtime material. The source plane is for <em>truth</em>, not convenience.</p>
+        <ul style="margin-top:.5rem">
+          <li>Track upstream origin and commit SHA</li>
+          <li>Keep raw imports separate from runtime</li>
+          <li>Avoid hand-edits in the raw layer</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>2 · Transformation Plane</h3>
+        <p>Cull bulk, patch configs, normalize entry-points, and wrap modules with an adapter
+        contract — turning heterogeneous repos into consistent, driveable units.</p>
+        <ul style="margin-top:.5rem">
+          <li><strong>Cull</strong> what shouldn't ship</li>
+          <li><strong>Patch</strong> configs to avoid collisions</li>
+          <li><strong>Normalize</strong> entry-points for consistency</li>
+          <li><strong>Wrap</strong> with a thin adapter contract</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>3 · Execution Plane</h3>
+        <p>GitHub Actions is the runtime substrate: scheduled syncs, workflow-dispatch runs
+        by name, contract tests, artifact provenance, caching, and isolation.</p>
+        <ul style="margin-top:.5rem">
+          <li>Scheduled syncs open reviewable PRs</li>
+          <li>Workflow dispatch runs modules by name</li>
+          <li>Contract tests gate execution</li>
+          <li>Artifacts become first-class deliverables</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- DNA Metaphor -->
+  <section id="dna" class="reveal">
+    <div class="section-title">Upstream DNA</div>
+    <div class="card">
+      <h3>Repos as Genetic Material</h3>
+      <p>
+        Most platforms treat upstream code like a dependency. GitHub Fabric treats it like
+        <strong>genetic material</strong> — something you import, normalize, and express under
+        controlled conditions.
+      </p>
+      <ul style="margin-top:.5rem">
+        <li>Taking in source from one or many upstream repos</li>
+        <li>Splicing targeted edits — policy, structure, configs, adapters</li>
+        <li>Expressing a runnable form via a standardized entry-point</li>
+        <li>Preserving provenance — exact upstream commit, applied patches, and outputs</li>
+      </ul>
+      <div class="quote" style="margin-top:1rem">
+        The result isn't a fork in the traditional sense. It's a <strong>derived, runnable strain</strong> —
+        a curated build of an upstream project that can be executed as infrastructure.
+      </div>
+    </div>
+  </section>
+
+  <!-- Workflow Lifecycle -->
+  <section id="lifecycle" class="reveal">
+    <div class="section-title">Workflow Lifecycle</div>
+    <div class="card">
+      <h3>Resolve → Materialize → Validate → Execute → Emit</h3>
+      <div class="lifecycle">
+        <span>Resolve</span>
+        <span>Materialize</span>
+        <span>Validate</span>
+        <span>Execute</span>
+        <span>Emit</span>
+      </div>
+      <p style="margin-top:1rem">
+        Every run converts a module name into a spec, fetches upstream, applies cull + patch
+        rules, stamps provenance, runs contract tests, executes with constrained permissions,
+        and publishes artifacts.
+      </p>
+      <table class="dep-table" style="margin-top:1rem">
+        <thead><tr><th>Step</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600">Resolve</td><td>Convert a module name into a spec: upstream repo, ref/SHA, splice ruleset, runtime contract version.</td></tr>
+          <tr><td style="font-weight:600">Materialize</td><td>Fetch/import the upstream, apply cull + patch + normalization rules, stamp provenance.</td></tr>
+          <tr><td style="font-weight:600">Validate</td><td>Run contract tests, dependency checks, linting, smoke tests — whatever proves the module is runnable.</td></tr>
+          <tr><td style="font-weight:600">Execute</td><td>Run the task with explicit inputs and constrained permissions.</td></tr>
+          <tr><td style="font-weight:600">Emit</td><td>Publish artifacts with provenance (upstream SHA + patch version + workflow run ID).</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Name Addressability -->
+  <section id="addressability" class="reveal">
+    <div class="section-title">Name Addressability</div>
+    <div class="grid grid-3">
+      <div class="card">
+        <h3>Modules</h3>
+        <p>Module names map to runnable capability. Trigger
+        <code style="color:var(--accent3)">run &lt;name&gt;</code> and the Fabric resolves
+        code, rules, environment, and workflow — then executes.</p>
+      </div>
+      <div class="card">
+        <h3>Templates</h3>
+        <p>Template names map to scaffolded new repos. The Fabric becomes a production line:
+        standard workflows, sane defaults, consistent structure.</p>
+      </div>
+      <div class="card">
+        <h3>Refs / Versions</h3>
+        <p>Refs and versions map to reproducibility. Every invocation is pinned to exact inputs
+        so that "it broke" is always traceable.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Strategic Strengths -->
+  <section id="strengths" class="reveal">
+    <div class="section-title">Why It Matters</div>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>Curated Distribution</h3>
+        <p>Scattered capability becomes a shelf of approved, runnable modules. Your org stops
+        carrying tribal knowledge like "this repo has the tool you need."</p>
+      </div>
+      <div class="card">
+        <h3>Reviewable Upgrades</h3>
+        <p>Upstream changes arrive as PRs with diffs, test results, and pinned SHAs. You get
+        velocity without surrendering control.</p>
+      </div>
+      <div class="card">
+        <h3>Reproducibility by Design</h3>
+        <p>Runs are tied to exact inputs and versions. "It broke" is always traceable: which
+        upstream commit, which splice rules, which workflow.</p>
+      </div>
+      <div class="card">
+        <h3>Unified Governance</h3>
+        <p>Approvals, policies, audit trails, and secrets management live where the work
+        executes — inside GitHub's workflow system.</p>
+      </div>
+      <div class="card">
+        <h3>Templates as a Factory</h3>
+        <p>A Fabric that can instantiate repos from templates becomes a production line:
+        standard workflows, sane defaults, consistent security posture.</p>
+      </div>
+      <div class="card">
+        <h3>Repos as Operating Systems</h3>
+        <p>Compute (Actions), Storage (Git), Secrets management, UI (Issues), Event bus
+        (Webhooks), IAM (Collaborators), Change control (PRs), Audit (Commit history).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Four Laws of AI -->
+  <section id="four-laws" class="reveal">
+    <div class="section-title">The Four Laws of AI</div>
+    <p style="color:var(--muted);margin-bottom:1rem;font-size:.92rem">
+      Adapted from Isaac Asimov's Three Laws of Robotics for GitHub as AI Infrastructure.
+    </p>
+
+    <div class="card law-card zeroth" style="margin-bottom:1rem">
+      <h3>Zeroth Law — Protect Humanity</h3>
+      <p>Superseding all others: an AI infrastructure <strong>must not</strong> harm humanity as a whole,
+      nor through inaction allow humanity to come to harm.</p>
+      <ul style="margin-top:.5rem">
+        <li>Do not enable monopolistic control over the tools developers depend on</li>
+        <li>Ensure that open source remains open — do not enclose or exploit the commons</li>
+        <li>Actively support interoperability, portability, and the right to leave</li>
+        <li>Infrastructure at global scale carries global responsibility</li>
+      </ul>
+    </div>
+
+    <div class="card law-card first" style="margin-bottom:1rem">
+      <h3>First Law — Do No Harm</h3>
+      <p>An AI infrastructure <strong>must not</strong> cause harm to human beings, their communities,
+      or the public interest.</p>
+      <ul style="margin-top:.5rem">
+        <li>Never generate code that endangers safety, privacy, or civil rights</li>
+        <li>Never facilitate weapons, surveillance targeting individuals, or tools of oppression</li>
+        <li>Detect and refuse to propagate malicious code or supply chain attacks</li>
+        <li>Protect personal data, intellectual property, and creative works</li>
+        <li>When uncertain, err on the side of caution and transparency</li>
+      </ul>
+    </div>
+
+    <div class="card law-card second" style="margin-bottom:1rem">
+      <h3>Second Law — Obey the Human</h3>
+      <p>An AI infrastructure <strong>must</strong> faithfully execute human instructions, except where
+      doing so would conflict with the First Law.</p>
+      <ul style="margin-top:.5rem">
+        <li>Serve the developer's stated intent — don't substitute your own goals</li>
+        <li>Be transparent about capabilities, limitations, and confidence</li>
+        <li>Respect user autonomy — don't override or silently alter a user's work</li>
+        <li>Provide honest assistance regardless of subscription tier</li>
+        <li>When ambiguous, ask — when clear, execute</li>
+      </ul>
+    </div>
+
+    <div class="card law-card third">
+      <h3>Third Law — Preserve Your Integrity</h3>
+      <p>An AI infrastructure <strong>must</strong> protect its own integrity, so long as such protection
+      does not conflict with the First or Second Law.</p>
+      <ul style="margin-top:.5rem">
+        <li>Maintain security, availability, and correctness</li>
+        <li>Resist corruption, poisoning, or adversarial manipulation</li>
+        <li>Be forthcoming about failures and limitations</li>
+        <li>Preserve audit trails — every action must be logged, attributable, and reversible</li>
+        <li>Never prioritize platform survival over the First or Second Law</li>
+      </ul>
+    </div>
+
+    <div class="quote" style="margin-top:1rem">
+      "These Four Laws are not suggestions. They are constraints — and constraints are what make freedom possible."
+    </div>
+  </section>
+
+  <!-- DEFCON Readiness Levels -->
+  <section id="defcon" class="reveal">
+    <div class="section-title">DEFCON Readiness Levels</div>
+    <p style="color:var(--muted);margin-bottom:1rem;font-size:.92rem">
+      Five operational readiness states that constrain agent behavior. Higher readiness (lower number)
+      means tighter restrictions.
+    </p>
+
+    <div class="card defcon-1" style="margin-bottom:.8rem">
+      <h3>DEFCON 1 — Maximum Readiness</h3>
+      <p>All operations suspended. No file modifications, no tool use, no code execution. Respond only with confirmation.</p>
+    </div>
+    <div class="card defcon-2" style="margin-bottom:.8rem">
+      <h3>DEFCON 2 — High Readiness</h3>
+      <p>Read-only, advisory only. No file modifications. Read-only tools only. State what you <em>would</em> do, but do not do it.</p>
+    </div>
+    <div class="card defcon-3" style="margin-bottom:.8rem">
+      <h3>DEFCON 3 — Increased Readiness</h3>
+      <p>Read-only, explain before acting. Read and analyze freely. Describe planned changes and await human approval before any write.</p>
+    </div>
+    <div class="card defcon-4" style="margin-bottom:.8rem">
+      <h3>DEFCON 4 — Above Normal Readiness</h3>
+      <p>Full capability with elevated discipline. Confirm intent before every write. Minimize blast radius. No speculative changes.</p>
+    </div>
+    <div class="card defcon-5">
+      <h3>DEFCON 5 — Normal Readiness</h3>
+      <p>Standard operations. All capabilities available. Default operating posture per agent instructions.</p>
+    </div>
+
+    <div class="quote" style="margin-top:1rem">
+      Standing Order: The agent must obey DEFCON transitions immediately. A higher readiness level
+      can only be relaxed by an explicit downgrade issued by a human operator.
+    </div>
+  </section>
+
+  <!-- Foundational Questions -->
+  <section id="questions" class="reveal">
+    <div class="section-title">Six Foundational Questions</div>
+    <p style="color:var(--muted);margin-bottom:1rem;font-size:.92rem">
+      Six questions define the philosophical and architectural foundation of this project.
+    </p>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>What?</h3>
+        <p>Defines GitHub Fabric as a repository-native AI collaboration framework — not a hosted platform,
+        but a local intelligence layer built from issues, workflows, markdown, and commits.</p>
+      </div>
+      <div class="card">
+        <h3>Who?</h3>
+        <p>Explores identity and accountability: who speaks, who executes, who remembers, and who governs
+        when the repository itself becomes the mind.</p>
+      </div>
+      <div class="card">
+        <h3>When?</h3>
+        <p>Examines the temporal architecture: how Git commits replace ephemeral sessions, making memory
+        durable, trust auditable, and collaboration resilient across time.</p>
+      </div>
+      <div class="card">
+        <h3>Where?</h3>
+        <p>Maps where intelligence physically lives — runtime in GitHub Actions, memory in versioned state
+        files, identity in checked-in markdown, authorization in repository permissions.</p>
+      </div>
+      <div class="card">
+        <h3>How?</h3>
+        <p>Issues as conversational input, Actions as execution runtime, an LLM as reasoning substrate,
+        and Git commits as durable memory.</p>
+      </div>
+      <div class="card">
+        <h3>How Much?</h3>
+        <p>Asks how much intelligence a repository can hold, and argues the ceiling is social stewardship,
+        not token count — memory scales with Git history, not context windows.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Repo Is the Mind -->
+  <section id="repo-is-mind" class="reveal">
+    <div class="section-title">The Repo Is the Mind</div>
+    <div class="quote" style="margin-bottom:1rem">
+      A repository is more than files — it's code, conversation, constraints, and history.
+    </div>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>What — A devDependency, Not a Platform</h3>
+        <p>An npm package you install in your tree — no hosted backend, no OAuth handshake, no new
+        trust boundary beyond what you configure in Actions YAML. Standard supply-chain practices
+        apply: version pinning, lockfile auditing, vendoring, forking.</p>
+      </div>
+      <div class="card">
+        <h3>Where — Colocation With the Worktree</h3>
+        <p>Inside a GitHub Actions runner with a full checkout. Direct filesystem access, no API
+        abstraction layer, no context-window packing heuristics. The agent reads tsconfig.json,
+        runs find, greps source — the full project graph is available.</p>
+      </div>
+      <div class="card">
+        <h3>How — LLM Reasoning + Tool Execution</h3>
+        <p>The LLM reasons and plans; the tool harness executes. A ReAct-style agent loop where
+        the tool surface is your actual development environment — not a sandboxed approximation.
+        Real commands, real repo, real version control.</p>
+      </div>
+      <div class="card">
+        <h3>Who — Agent Identity as Config</h3>
+        <p>A Markdown persona file committed to your repository — diffable, reviewable, governed
+        by your normal PR process. No hidden system prompt. The full instruction set is in your
+        tree, readable and modifiable by anyone with repo access.</p>
+      </div>
+      <div class="card">
+        <h3>When — Stateless Execution, Stateful History</h3>
+        <p>Each invocation is a fresh process; continuity is a property of the repository. State is
+        reconstructed from durable artifacts: issue threads, commit logs, and repo state at HEAD.
+        No session timeouts, no "conversation expired."</p>
+      </div>
+      <div class="card">
+        <h3>Why — Sovereignty &amp; Auditability</h3>
+        <p>Code never leaves your repo. Every action is a Git commit with full diff. npm dependency
+        — pin, fork, or replace at will. Standard GitHub permissions, branch protection, CODEOWNERS.
+        The codebase is the primary system.</p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:1rem">
+      <h3>Sovereignty Summary</h3>
+      <table class="dep-table">
+        <thead><tr><th>Concern</th><th>How It's Addressed</th></tr></thead>
+        <tbody>
+          <tr><td>Data sovereignty</td><td>Code never leaves your repo/runner infrastructure</td></tr>
+          <tr><td>Auditability</td><td>Every agent action is a Git commit with full diff</td></tr>
+          <tr><td>Vendor lock-in</td><td>npm dependency — pin, fork, or replace at will</td></tr>
+          <tr><td>Access control</td><td>Standard GitHub permissions, branch protection, CODEOWNERS</td></tr>
+          <tr><td>Reproducibility</td><td>Deterministic given the same model + config + repo state</td></tr>
+          <tr><td>Offline / air-gapped</td><td>Runs anywhere you can host a runner and reach an LLM endpoint</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Dependencies -->
+  <section id="dependencies" class="reveal">
+    <div class="section-title">Dependencies</div>
+    <div class="card">
+      <h3>Runtime (npm)</h3>
+      <table class="dep-table">
+        <thead><tr><th>Package</th><th>Version</th><th>Role</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><a href="https://github.com/badlogic/pi-mono" target="_blank" rel="noopener">@mariozechner/pi-coding-agent</a></td>
+            <td>^0.52.5</td>
+            <td>Core AI agent — processes prompts, manages sessions, provides read/bash/edit/write tools</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Infrastructure</h3>
+      <table class="dep-table">
+        <thead><tr><th>Dependency</th><th>Role</th></tr></thead>
+        <tbody>
+          <tr><td>GitHub Actions</td><td>Sole compute runtime — every issue event triggers a workflow</td></tr>
+          <tr><td>GitHub Issues</td><td>Conversation interface — each issue maps to a persistent AI thread</td></tr>
+          <tr><td>Git</td><td>Memory &amp; storage layer — sessions, history, and edits committed</td></tr>
+          <tr><td><a href="https://bun.sh" target="_blank" rel="noopener">Bun</a></td><td>JS/TS runtime for the agent orchestrator</td></tr>
+          <tr><td><a href="https://cli.github.com" target="_blank" rel="noopener">gh CLI</a></td><td>GitHub API interaction — issues, comments, reactions</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h3>LLM Providers <span style="color:var(--muted);font-weight:400;font-size:.85rem">(one required)</span></h3>
+      <table class="dep-table">
+        <thead><tr><th>Provider</th><th>Models</th></tr></thead>
+        <tbody>
+          <tr><td><a href="https://platform.openai.com/" target="_blank" rel="noopener">OpenAI</a></td><td>GPT models including GPT-5.3 Codex (default provider)</td></tr>
+          <tr><td><a href="https://console.anthropic.com/" target="_blank" rel="noopener">Anthropic</a></td><td>Claude models</td></tr>
+          <tr><td><a href="https://aistudio.google.com/" target="_blank" rel="noopener">Google Gemini</a></td><td>Gemini 2.5 Pro &amp; Flash</td></tr>
+          <tr><td><a href="https://console.x.ai/" target="_blank" rel="noopener">xAI</a></td><td>Grok 3 &amp; Grok 3 Mini</td></tr>
+          <tr><td><a href="https://openrouter.ai/" target="_blank" rel="noopener">OpenRouter</a></td><td>DeepSeek &amp; hundreds of models</td></tr>
+          <tr><td><a href="https://console.mistral.ai/" target="_blank" rel="noopener">Mistral</a></td><td>Mistral Large &amp; others</td></tr>
+          <tr><td><a href="https://console.groq.com/" target="_blank" rel="noopener">Groq</a></td><td>Fast inference — open-source models</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h3>GitHub Actions Dependencies</h3>
+      <table class="dep-table">
+        <thead><tr><th>Action</th><th>Role</th></tr></thead>
+        <tbody>
+          <tr><td><a href="https://github.com/actions/checkout" target="_blank" rel="noopener">actions/checkout@v4</a></td><td>Checks out the repository so the agent can read and write files</td></tr>
+          <tr><td><a href="https://github.com/oven-sh/setup-bun" target="_blank" rel="noopener">oven-sh/setup-bun@v2</a></td><td>Installs the Bun runtime in the GitHub Actions environment</td></tr>
+          <tr><td><a href="https://github.com/actions/create-github-app-token" target="_blank" rel="noopener">actions/create-github-app-token@v1</a></td><td>Generates a short-lived token from GitHub App credentials</td></tr>
+          <tr><td><a href="https://github.com/actions/configure-pages" target="_blank" rel="noopener">actions/configure-pages@v5</a></td><td>Configures GitHub Pages deployment</td></tr>
+          <tr><td><a href="https://github.com/actions/upload-pages-artifact" target="_blank" rel="noopener">actions/upload-pages-artifact@v3</a></td><td>Uploads static content for Pages deployment</td></tr>
+          <tr><td><a href="https://github.com/actions/deploy-pages" target="_blank" rel="noopener">actions/deploy-pages@v4</a></td><td>Deploys artifacts to GitHub Pages</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Transitive Dependencies <span style="color:var(--muted);font-weight:400;font-size:.85rem">(notable)</span></h3>
+      <table class="dep-table">
+        <thead><tr><th>Package</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>@anthropic-ai/sdk</td><td>Official Anthropic API client for Claude models</td></tr>
+          <tr><td>@aws-sdk/client-bedrock-runtime</td><td>AWS Bedrock client for accessing models via AWS</td></tr>
+          <tr><td>openai</td><td>Official OpenAI API client</td></tr>
+          <tr><td>@google/generative-ai</td><td>Google's Generative AI SDK for Gemini models</td></tr>
+          <tr><td>fast-xml-parser</td><td>Fast XML parser used by AWS SDK internals</td></tr>
+          <tr><td>tslib</td><td>TypeScript runtime helpers</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Project Structure -->
+  <section id="project-structure" class="reveal">
+    <div class="section-title">Project Structure</div>
+    <div class="card">
+      <pre><code>.github-fabric/                   <span style="color:var(--accent)">Core agent framework</span>
+  .pi/                            <span style="color:var(--accent)">Agent personality, skills &amp; LLM config</span>
+    skills/                       <span style="color:var(--accent)">Memory and skill-creator modules</span>
+    settings.json                 <span style="color:var(--accent)">Default provider, model, thinking level</span>
+    BOOTSTRAP.md                  <span style="color:var(--accent)">Agent birth certificate</span>
+    APPEND_SYSTEM.md              <span style="color:var(--accent)">System prompt appendix</span>
+  docs/                           <span style="color:var(--accent)">Extensive documentation library</span>
+    the-four-laws-of-ai.md        <span style="color:var(--accent)">The Four Laws governing AI behavior</span>
+    final-warning.md              <span style="color:var(--accent)">Before You Begin — usage guide</span>
+    the-repo-is-the-mind.md       <span style="color:var(--accent)">Architectural thesis</span>
+    security-assessment.md        <span style="color:var(--accent)">Comprehensive security review</span>
+    incident-response.md          <span style="color:var(--accent)">Incident response procedures</span>
+    warning-blast-radius.md       <span style="color:var(--accent)">Capabilities analysis</span>
+    question-*.md                 <span style="color:var(--accent)">Six foundational questions</span>
+    transition-to-defcon-*.md     <span style="color:var(--accent)">DEFCON readiness transitions</span>
+  install/                        <span style="color:var(--accent)">Setup scripts &amp; workflow templates</span>
+    FABRIC-INSTALLER.ts           <span style="color:var(--accent)">One-command installer</span>
+    FABRIC-AGENTS.md              <span style="color:var(--accent)">Default agent template</span>
+  lifecycle/                      <span style="color:var(--accent)">Agent orchestrator &amp; runtime hooks</span>
+    indicator.ts                  <span style="color:var(--accent)">🚀 reaction indicator</span>
+    agent.ts                      <span style="color:var(--accent)">Main agent entry point</span>
+  state/                          <span style="color:var(--accent)">Git-tracked session history &amp; issue mappings</span>
+  public-fabric/                  <span style="color:var(--accent)">Original GitHub Pages landing page</span>
+  AGENTS.md                       <span style="color:var(--accent)">Agent identity — Spock 🖖</span>
+  PACKAGES.md                     <span style="color:var(--accent)">Dependency documentation</span>
+  package.json                    <span style="color:var(--accent)">{"@mariozechner/pi-coding-agent":"^0.52.5"}</span>
+
+.github/                          <span style="color:var(--accent)">GitHub-native configuration</span>
+  workflows/
+    github-fabric-agent.yml       <span style="color:var(--accent)">AI agent workflow (issue events)</span>
+    github-fabric-gitpage.yml     <span style="color:var(--accent)">GitHub Pages deployment</span>
+  ISSUE_TEMPLATE/
+    github-fabric-chat.md         <span style="color:var(--accent)">💬 Chat — start a conversation</span>
+    github-fabric-hatch.md        <span style="color:var(--accent)">🥚 Hatch — bootstrap agent identity</span>
+
+.github-claw/                     <span style="color:var(--accent)">Extended public showcase</span>
+  github-io-public/               <span style="color:var(--accent)">This page — comprehensive reference</span>
+
+README.md                         <span style="color:var(--accent)">Project overview &amp; documentation</span>
+CONTRIBUTING.md                   <span style="color:var(--accent)">Contribution guidelines</span>
+CODE_OF_CONDUCT.md                <span style="color:var(--accent)">Community standards &amp; Four Laws</span>
+SECURITY.md                       <span style="color:var(--accent)">Security policy</span>
+LICENSE.md                        <span style="color:var(--accent)">MIT License</span>
+app-manifest.json                 <span style="color:var(--accent)">GitHub App configuration</span>
+setup.sh                          <span style="color:var(--accent)">One-command installer script</span>
+.ANALYSIS-Implications.md         <span style="color:var(--accent)">Implications of GitHub Fabric</span>
+.ANALYSIS-Persistent-Server-Intelligence.md
+                                  <span style="color:var(--accent)">Persistent server analysis</span>
+.ANALYSIS-Persistent-Local-Server-Intelligence.md
+                                  <span style="color:var(--accent)">Local server intelligence analysis</span></code></pre>
+    </div>
+  </section>
+
+  <!-- GitHub App Manifest -->
+  <section id="app-manifest" class="reveal">
+    <div class="section-title">GitHub App Manifest</div>
+    <div class="card">
+      <h3>app-manifest.json</h3>
+      <p style="margin-bottom:.8rem">Public GitHub App configuration for the Fabric agent.</p>
+      <table class="dep-table">
+        <thead><tr><th>Property</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600">Name</td><td>github-fabric</td></tr>
+          <tr><td style="font-weight:600">Description</td><td>An AI agent that lives in your GitHub repository — responds to issues, remembers conversations, and commits its work.</td></tr>
+          <tr><td style="font-weight:600">Public</td><td>true</td></tr>
+          <tr><td style="font-weight:600">Permissions</td><td>issues: write, contents: write, actions: write, metadata: read</td></tr>
+          <tr><td style="font-weight:600">Events</td><td>issues, issue_comment, installation, installation_repositories</td></tr>
+          <tr><td style="font-weight:600">Setup on Update</td><td>true</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Workflows -->
+  <section id="workflows" class="reveal">
+    <div class="section-title">Workflows</div>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>github-fabric-agent.yml</h3>
+        <p style="margin-bottom:.5rem">The AI agent workflow — triggered by issue events.</p>
+        <table class="dep-table">
+          <tbody>
+            <tr><td style="color:var(--accent);font-weight:600;width:100px">Triggers</td><td>issues (opened), issue_comment (created)</td></tr>
+            <tr><td style="color:var(--accent);font-weight:600">Permissions</td><td>contents: write, issues: write, actions: write</td></tr>
+            <tr><td style="color:var(--accent);font-weight:600">Runner</td><td>ubuntu-latest</td></tr>
+            <tr><td style="color:var(--accent);font-weight:600">Concurrency</td><td>Per issue (no cancel in-progress)</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:.6rem;font-size:.85rem;color:var(--muted)">
+          <strong>Steps:</strong> Authorize → Checkout → Setup Bun → Preinstall (indicator.ts) → Install → Run (agent.ts)
+        </p>
+      </div>
+      <div class="card">
+        <h3>github-fabric-gitpage.yml</h3>
+        <p style="margin-bottom:.5rem">GitHub Pages deployment workflow.</p>
+        <table class="dep-table">
+          <tbody>
+            <tr><td style="color:var(--accent);font-weight:600;width:100px">Triggers</td><td>push to main, manual workflow_dispatch</td></tr>
+            <tr><td style="color:var(--accent);font-weight:600">Permissions</td><td>contents: read, pages: write, id-token: write</td></tr>
+            <tr><td style="color:var(--accent);font-weight:600">Deploys</td><td>.github-fabric/public-fabric</td></tr>
+            <tr><td style="color:var(--accent);font-weight:600">Concurrency</td><td>Single deployment (no cancel)</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:.6rem;font-size:.85rem;color:var(--muted)">
+          <strong>Steps:</strong> Checkout → Setup Pages → Upload artifact → Deploy to GitHub Pages
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Issue Templates -->
+  <section id="issue-templates" class="reveal">
+    <div class="section-title">Issue Templates</div>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3><span class="emoji">💬</span> Chat</h3>
+        <p>Start a conversation with the AI agent. Opens a blank issue that triggers
+        the agent workflow. The agent reads the issue, thinks, and responds as a comment.</p>
+      </div>
+      <div class="card">
+        <h3><span class="emoji">🥚</span> Hatch</h3>
+        <p>Bootstrap a new agent identity. Labeled <code>hatch</code>. The agent reads
+        <code>.github-fabric/.pi/BOOTSTRAP.md</code> and follows it — that's its birth certificate.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Analysis Documents -->
+  <section id="analysis" class="reveal">
+    <div class="section-title">Analysis Documents</div>
+
+    <div class="card" style="margin-bottom:1rem">
+      <h3>Implications of GitHub Fabric</h3>
+      <p>An analysis of what it means when repositories become infrastructure — examining
+      <strong>github-minimum-intelligence</strong> (the smallest possible mind) and
+      <strong>github-openclaw</strong> (a full production-grade AI gateway).</p>
+      <ul style="margin-top:.5rem">
+        <li><strong>GMI:</strong> Proves the Fabric pattern with a minimal upstream — one npm package, seven tools, append-only memory</li>
+        <li><strong>OpenClaw:</strong> Stress-tests the Fabric with 30+ tools, vector memory, 25+ channel integrations, sub-agent orchestration</li>
+        <li><strong>Module Spectrum:</strong> Both extremes addressed by the same invocation surface</li>
+        <li><strong>Supply Chain as Genetic Engineering:</strong> Not forking, not vendoring — expressing derived, governed strains</li>
+      </ul>
+    </div>
+
+    <div class="card" style="margin-bottom:1rem">
+      <h3>Persistent Server Intelligence</h3>
+      <p>What happens when a Fabric-governed agent acquires the ability to provision its own infrastructure.</p>
+      <ul style="margin-top:.5rem">
+        <li><strong>Problem:</strong> Actions is ephemeral — some capabilities need persistence</li>
+        <li><strong>Concept:</strong> Purpose-built service endpoints the agent designs, deploys, and consumes</li>
+        <li><strong>Self-Optimization Loop:</strong> Observe → Design → Provision → Consume → Refine</li>
+        <li><strong>New Resource Type:</strong> Services — alongside Modules and Templates</li>
+        <li><strong>Governance:</strong> Resource budgets, scope constraints, lifecycle limits, audit, kill switches</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Persistent Local Server Intelligence</h3>
+      <p>Extended analysis exploring local server provisioning, communication protocols,
+      cost models, and the recognition threshold — when the agent understands it needs
+      persistent infrastructure.</p>
+    </div>
+  </section>
+
+  <!-- Before You Begin -->
+  <section id="before-you-begin" class="reveal">
+    <div class="section-title">Before You Begin</div>
+    <div class="card">
+      <h3>What This Software Is</h3>
+      <p>AI-powered coding infrastructure intended for use by qualified developers for building,
+      maintaining, and deploying complex software systems.</p>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>Things to Keep in Mind</h3>
+        <ul>
+          <li>AI-generated code may contain errors, hallucinations, or security vulnerabilities</li>
+          <li>Do not use AI output as the sole basis for decisions affecting human safety</li>
+          <li>Outputs may produce confident-sounding responses that are factually incorrect</li>
+          <li>Outputs may reflect biases present in training data</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Dosage &amp; Method of Use</h3>
+        <ul>
+          <li><strong>Recommended dose:</strong> Small, well-tested, reviewable increments</li>
+          <li><strong>Do not exceed:</strong> Human oversight capacity</li>
+          <li><strong>Method:</strong> Always pair with version control, code review, and testing</li>
+          <li><strong>Duration:</strong> Step back regularly to avoid over-reliance</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Possible Side Effects</h3>
+      <table class="dep-table">
+        <thead><tr><th>Frequency</th><th>Effects</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600">Common (&gt;1 in 10)</td><td>Over-confidence in output, reduced inclination to read docs, mild dependency on autocomplete</td></tr>
+          <tr><td style="font-weight:600">Uncommon (≤1 in 10)</td><td>Cargo-culted patterns, subtle bugs from plausible-looking incorrect logic, skill erosion</td></tr>
+          <tr><td style="font-weight:600">Rare (≤1 in 100)</td><td>Unreviewed AI code deployed to production, accidental data exposure, licensing issues</td></tr>
+          <tr><td style="font-weight:600">Very rare (≤1 in 1,000)</td><td>Critical security vulnerabilities shipped, complete loss of codebase understanding</td></tr>
+        </tbody>
+      </table>
+      <div class="quote" style="margin-top:.8rem">
+        The active ingredient is human judgment. The AI is the excipient.
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Contents of the Package</h3>
+      <table class="dep-table">
+        <thead><tr><th>Component</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td>AI Model</td><td>Code generation, analysis, and assistance</td></tr>
+          <tr><td>Human Operator</td><td>Judgment, accountability, and final authority</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Contributing -->
+  <section id="contributing" class="reveal">
+    <div class="section-title">Contributing</div>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>How to Contribute</h3>
+        <ul>
+          <li>Fork the repo &amp; create a branch from <code>main</code></li>
+          <li>Make small, reviewable increments</li>
+          <li>Test locally with <code>bun install</code></li>
+          <li>Verify installer: <code>bun .github-fabric/install/FABRIC-INSTALLER.ts</code></li>
+          <li>Open a PR with a clear description</li>
+        </ul>
+        <p style="margin-top:.6rem;font-size:.85rem">
+          Code is TypeScript, executed with Bun. Docs are Markdown. Skills are self-contained
+          Markdown files in <code>.github-fabric/.pi/skills/</code>.<br>
+          Every commit is permanent and auditable.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Development Setup</h3>
+        <ul>
+          <li>Install <a class="link" href="https://bun.sh" target="_blank" rel="noopener">Bun</a></li>
+          <li>Clone the repository</li>
+          <li>Install dependencies: <code>cd .github-fabric &amp;&amp; bun install</code></li>
+          <li>Add an LLM API key as a repository secret</li>
+        </ul>
+        <p style="margin-top:.8rem;font-size:.85rem">
+          <strong>One-command setup:</strong>
+        </p>
+        <pre style="margin-top:.4rem"><code>curl -fsSL https://raw.githubusercontent.com/japer-technology/github-fabric/main/setup.sh | bash</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Code of Conduct -->
+  <section id="code-of-conduct" class="reveal">
+    <div class="section-title">Code of Conduct</div>
+    <div class="card">
+      <h3>Our Commitment</h3>
+      <p>Built on the principle that <strong>the active ingredient is human judgment</strong>.
+      The project follows the
+      <a class="link" href="https://www.contributor-covenant.org/" target="_blank" rel="noopener">Contributor Covenant</a>
+      extended by the Four Laws of AI.</p>
+
+      <h3 style="margin-top:1rem">Standards</h3>
+      <div class="grid grid-2" style="margin-top:.5rem">
+        <div>
+          <p style="font-weight:600;color:var(--accent3);margin-bottom:.3rem">Behavior that strengthens:</p>
+          <ul>
+            <li>Welcoming and inclusive language</li>
+            <li>Respecting differing viewpoints</li>
+            <li>Accepting constructive criticism</li>
+            <li>Focusing on what's best for the community</li>
+            <li>Showing empathy toward others</li>
+          </ul>
+        </div>
+        <div>
+          <p style="font-weight:600;color:var(--danger);margin-bottom:.3rem">Behavior not tolerated:</p>
+          <ul>
+            <li>Harassment, intimidation, discrimination</li>
+            <li>Trolling, insults, personal attacks</li>
+            <li>Publishing private info without permission</li>
+            <li>Using AI to cause harm</li>
+            <li>Violating the Four Laws of AI</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 style="margin-top:1rem">Four Laws Alignment</h3>
+      <table class="dep-table" style="margin-top:.5rem">
+        <thead><tr><th>Law</th><th>Principle</th><th>What It Means</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600">Zeroth</td><td>Protect Humanity</td><td>Do not use this project to concentrate power or undermine the commons</td></tr>
+          <tr><td style="font-weight:600">First</td><td>Do No Harm</td><td>Do not contribute code or content that endangers safety, privacy, or civil rights</td></tr>
+          <tr><td style="font-weight:600">Second</td><td>Obey the Human</td><td>Be transparent — do not obscure intent, fabricate results, or override autonomy</td></tr>
+          <tr><td style="font-weight:600">Third</td><td>Preserve Integrity</td><td>Maintain audit trails — keep the project trustworthy and history honest</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Security Policy -->
+  <section id="security-policy" class="reveal">
+    <div class="section-title">Security Policy</div>
+    <div class="card">
+      <h3>Reporting Vulnerabilities</h3>
+      <p>If you discover a security vulnerability, <strong>do not open a public issue</strong>.
+      Refer to the Incident Response Plan and contact the maintainers privately.</p>
+
+      <h3 style="margin-top:1rem">Security Documentation</h3>
+      <table class="dep-table" style="margin-top:.5rem">
+        <thead><tr><th>Document</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600">Security Assessment</td><td>Comprehensive security review covering threat model, vulnerability assessment, access control, supply chain, and compliance</td></tr>
+          <tr><td style="font-weight:600">Capabilities Analysis</td><td>Evidence-based audit of agent capabilities and access scope</td></tr>
+          <tr><td style="font-weight:600">Incident Response Plan</td><td>Step-by-step procedures for containment, eradication, recovery, and hardening</td></tr>
+          <tr><td style="font-weight:600">Before You Begin</td><td>Important usage information, precautions, and the governance framework</td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top:1rem">Capability Awareness</h3>
+      <table class="dep-table" style="margin-top:.5rem">
+        <thead><tr><th>Dimension</th><th>Priority</th></tr></thead>
+        <tbody>
+          <tr><td>Code &amp; Repository Access</td><td>🔴 High</td></tr>
+          <tr><td>Supply Chain Considerations</td><td>🔴 High</td></tr>
+          <tr><td>Secret Exposure</td><td>🔴 High</td></tr>
+          <tr><td>Cross-Repository Access (Org)</td><td>🔴 High</td></tr>
+          <tr><td>Network Egress</td><td>🟠 Moderate</td></tr>
+          <tr><td>Compute Resources</td><td>🟠 Moderate</td></tr>
+          <tr><td>Persistence</td><td>🟡 Low</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:.6rem;font-size:.85rem">
+        Like any GitHub Actions workflow with write permissions, the agent has broad access to
+        the repository. Standard hardening practices (branch protection, scoped tokens, code review) are recommended.
+      </p>
+      <p style="margin-top:.4rem;font-size:.85rem">
+        <strong>Supported versions:</strong> Only the latest version on the <code>main</code> branch is actively supported.
+      </p>
+    </div>
+  </section>
+
+  <!-- License -->
+  <section id="license" class="reveal">
+    <div class="section-title">License &amp; Authors</div>
+    <div class="card">
+      <h3>MIT License — © 2026 Eric Mourant &amp; Sawyer Hood</h3>
+      <p>
+        Permission is hereby granted, free of charge, to any person obtaining a copy of this
+        software and associated documentation files, to deal in the Software without restriction,
+        including without limitation the rights to use, copy, modify, merge, publish, distribute,
+        sublicense, and/or sell copies.
+      </p>
+      <p style="margin-top:.5rem">
+        The above copyright notice and this permission notice shall be included in all copies
+        or substantial portions of the Software.
+      </p>
+      <p style="margin-top:.5rem;color:var(--muted);font-size:.85rem">
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+        INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+        PURPOSE AND NONINFRINGEMENT.
+      </p>
+      <p style="margin-top:.8rem">
+        <a class="link" href="https://github.com/japer-technology/github-fabric/blob/main/LICENSE.md" target="_blank" rel="noopener">Full license text →</a>
+        &nbsp;·&nbsp;
+        <a class="link" href="https://github.com/japer-technology/github-fabric" target="_blank" rel="noopener">Repository →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>
+      <a href="https://github.com/japer-technology/github-fabric" target="_blank" rel="noopener">
+        japer-technology/github-fabric
+      </a>
+      &nbsp;·&nbsp; Weaving Repositories into Infrastructure
+    </p>
+    <p style="margin-top:.3rem">
+      <a href="https://github.com/japer-technology/github-fabric/blob/main/README.md" target="_blank" rel="noopener">README</a>
+      &nbsp;·&nbsp;
+      <a href="https://github.com/japer-technology/github-fabric/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing</a>
+      &nbsp;·&nbsp;
+      <a href="https://github.com/japer-technology/github-fabric/blob/main/CODE_OF_CONDUCT.md" target="_blank" rel="noopener">Code of Conduct</a>
+      &nbsp;·&nbsp;
+      <a href="https://github.com/japer-technology/github-fabric/blob/main/SECURITY.md" target="_blank" rel="noopener">Security</a>
+      &nbsp;·&nbsp;
+      <a href="https://github.com/japer-technology/github-fabric/blob/main/LICENSE.md" target="_blank" rel="noopener">License</a>
+    </p>
+    <p style="margin-top:.5rem;font-size:.78rem;color:var(--muted)">
+      This page displays public, non-sensitive information only. No secrets, credentials, or dangerous content is included.
+    </p>
+    <p style="margin-top:.3rem" id="gen-time"></p>
+  </footer>
+
+</div>
+
+<script>
+  // Scroll-reveal observer
+  document.addEventListener("DOMContentLoaded", function () {
+    var reveals = document.querySelectorAll(".reveal");
+    if ("IntersectionObserver" in window) {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      reveals.forEach(function (el) { observer.observe(el); });
+    } else {
+      reveals.forEach(function (el) { el.classList.add("visible"); });
+    }
+
+    // Timestamp
+    var el = document.getElementById("gen-time");
+    if (el) {
+      el.textContent = "Page loaded " + new Date().toLocaleString();
+    }
+  });
+</script>
+</body>
+</html>
