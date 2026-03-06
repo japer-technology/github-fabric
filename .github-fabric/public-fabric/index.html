@@ -1,110 +1,436 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GitHub Fabric</title>
-  <meta name="description" content="GitHub Fabric — Weaving Repositories into Infrastructure. A repository-native AI collaboration framework.">
-  <style>
-    :root {
-      --bg: #0d1117;
-      --fg: #e6edf3;
-      --muted: #8b949e;
-      --accent: #58a6ff;
-      --border: #30363d;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--fg);
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-    }
-    .container {
-      max-width: 640px;
-      text-align: center;
-    }
-    .logo {
-      width: 320px;
-      height: auto;
-      margin-bottom: 1.5rem;
-    }
-    h1 {
-      font-size: 2.25rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-    .tagline {
-      font-size: 1.1rem;
-      color: var(--muted);
-      margin-bottom: 2rem;
-    }
-    .description {
-      font-size: 1rem;
-      color: var(--muted);
-      margin-bottom: 2.5rem;
-      line-height: 1.7;
-    }
-    .links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      justify-content: center;
-    }
-    .links a {
-      display: inline-block;
-      padding: 0.6rem 1.25rem;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--accent);
-      text-decoration: none;
-      font-size: 0.95rem;
-      transition: background 0.15s, border-color 0.15s;
-    }
-    .links a:hover {
-      background: rgba(88, 166, 255, 0.1);
-      border-color: var(--accent);
-    }
-    footer {
-      margin-top: 3rem;
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
-    footer a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub Fabric — japer-technology/github-fabric</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0d1117;--surface:#161b22;--border:#30363d;
+    --text:#e6edf3;--muted:#8b949e;--accent:#58a6ff;
+    --accent2:#bc8cff;--accent3:#3fb950;--glow:rgba(88,166,255,.15);
+    --radius:12px;
+  }
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--text);line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  /* ── Animated background mesh ── */
+  .bg-mesh{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 10%,rgba(88,166,255,.08),transparent),
+      radial-gradient(ellipse 60% 50% at 80% 80%,rgba(188,140,255,.06),transparent),
+      radial-gradient(ellipse 50% 40% at 50% 50%,rgba(63,185,80,.04),transparent);
+    animation:meshDrift 20s ease-in-out infinite alternate;
+  }
+  @keyframes meshDrift{
+    0%{filter:hue-rotate(0deg)}
+    100%{filter:hue-rotate(30deg)}
+  }
+
+  /* ── Layout ── */
+  .page{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:2rem 1.5rem 4rem}
+
+  /* ── Hero ── */
+  .hero{text-align:center;padding:3rem 0 2rem}
+  .hero-logo{
+    width:min(360px,80vw);border-radius:var(--radius);
+    filter:drop-shadow(0 0 40px rgba(88,166,255,.25));
+    animation:fadeUp .8s ease-out both;
+  }
+  .hero h1{
+    font-size:clamp(2rem,5vw,3.2rem);font-weight:800;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    background-clip:text;
+    margin:.8rem 0 .4rem;
+    animation:fadeUp .8s .15s ease-out both;
+  }
+  .hero .slug{
+    font-family:"SFMono-Regular",Consolas,monospace;
+    color:var(--muted);font-size:.95rem;
+    animation:fadeUp .8s .25s ease-out both;
+  }
+  .hero .tagline{
+    max-width:640px;margin:1.2rem auto 0;color:var(--muted);
+    font-size:1.05rem;
+    animation:fadeUp .8s .35s ease-out both;
+  }
+  @keyframes fadeUp{
+    from{opacity:0;transform:translateY(24px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+
+  /* ── Badges ── */
+  .badges{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:1rem;animation:fadeUp .8s .4s ease-out both}
+  .badge{
+    display:inline-flex;align-items:center;gap:.35rem;
+    padding:.3rem .7rem;border-radius:999px;font-size:.78rem;font-weight:600;
+    border:1px solid var(--border);background:var(--surface);color:var(--muted);
+    transition:border-color .2s,color .2s;
+  }
+  .badge:hover{border-color:var(--accent);color:var(--accent)}
+  .badge .dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+  .dot--blue{background:var(--accent)}.dot--green{background:var(--accent3)}.dot--purple{background:var(--accent2)}
+
+  /* ── Sections ── */
+  section{margin-top:2.5rem}
+  .section-title{
+    font-size:1.15rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+    color:var(--accent);margin-bottom:1rem;
+    display:flex;align-items:center;gap:.5rem;
+  }
+  .section-title::before{content:"";width:4px;height:1.1em;border-radius:2px;background:var(--accent)}
+
+  /* ── Cards ── */
+  .card{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+    padding:1.4rem 1.6rem;margin-bottom:1rem;
+    transition:border-color .25s,box-shadow .25s;
+  }
+  .card:hover{border-color:var(--accent);box-shadow:0 0 20px var(--glow)}
+  .card h3{font-size:1.05rem;margin-bottom:.5rem;color:var(--text)}
+  .card p,.card li{color:var(--muted);font-size:.92rem}
+  .card ul{list-style:none;padding:0}
+  .card li{padding:.25rem 0;padding-left:1.2rem;position:relative}
+  .card li::before{content:"›";position:absolute;left:0;color:var(--accent);font-weight:700}
+
+  /* ── Grid ── */
+  .grid{display:grid;gap:1rem}
+  .grid-2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .grid-3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+
+  /* ── Table ── */
+  .dep-table{width:100%;border-collapse:collapse;font-size:.88rem}
+  .dep-table th{text-align:left;color:var(--accent);padding:.5rem .6rem;border-bottom:1px solid var(--border);font-weight:600}
+  .dep-table td{padding:.5rem .6rem;color:var(--muted);border-bottom:1px solid var(--border)}
+  .dep-table a{color:var(--accent);text-decoration:none}
+  .dep-table a:hover{text-decoration:underline}
+
+  /* ── Lifecycle ── */
+  .lifecycle{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.6rem}
+  .lifecycle span{
+    background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);
+    padding:.4rem .85rem;font-size:.82rem;font-weight:600;color:var(--text);
+    position:relative;
+  }
+  .lifecycle span::after{
+    content:"→";color:var(--accent);margin-left:.6rem;font-weight:400;
+  }
+  .lifecycle span:last-child::after{content:"✓";color:var(--accent3)}
+
+  /* ── Links ── */
+  a.link{color:var(--accent);text-decoration:none;border-bottom:1px dashed var(--accent);transition:color .2s}
+  a.link:hover{color:var(--accent2);border-color:var(--accent2)}
+
+  /* ── Footer ── */
+  footer{
+    text-align:center;margin-top:3rem;padding-top:2rem;
+    border-top:1px solid var(--border);color:var(--muted);font-size:.82rem;
+  }
+  footer a{color:var(--accent);text-decoration:none}
+  footer a:hover{text-decoration:underline}
+
+  /* ── Scroll-reveal ── */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+</style>
 </head>
 <body>
-  <div class="container">
-    <img
-      class="logo"
-      src="https://raw.githubusercontent.com/japer-technology/github-fabric/main/.github-fabric/logo.png"
-      alt="GitHub Fabric logo"
-    >
+<div class="bg-mesh"></div>
+<div class="page">
+
+  <!-- Hero -->
+  <header class="hero">
+    <img class="hero-logo" src="https://raw.githubusercontent.com/japer-technology/github-fabric/main/.github-fabric/logo.png" alt="GitHub Fabric logo">
     <h1>GitHub Fabric</h1>
-    <p class="tagline">Weaving Repositories into Infrastructure</p>
-    <p class="description">
-      This "GitHub as Infrastructure" meta-repo ingests upstream repos,
-      splices them with controlled modifications, and then exposes each repo as an array of
-      name-addressable, runnable modules - powered by GitHub Actions.
+    <p class="slug">japer-technology / github-fabric</p>
+    <p class="tagline">
+      A "GitHub&nbsp;as&nbsp;Infrastructure" meta-repo that ingests upstream repos, splices in
+      controlled modifications, and exposes each as a name-addressable, runnable module —
+      all powered by GitHub&nbsp;Actions.
     </p>
-    <nav class="links">
-      <a href="https://github.com/japer-technology/github-fabric">Repository</a>
-      <a href="https://github.com/japer-technology/github-fabric/blob/main/README.md">Documentation</a>
-      <a href="https://github.com/japer-technology/github-fabric/blob/main/CONTRIBUTING.md">Contributing</a>
-      <a href="https://github.com/japer-technology/github-fabric/blob/main/LICENSE.md">License</a>
-    </nav>
-    <footer>
-      <p>2026 &copy; <a href="https://github.com/japer-technology">JAPER Technology</a></p>
-    </footer>
-  </div>
+    <div class="badges">
+      <span class="badge"><span class="dot dot--green"></span>MIT License</span>
+      <span class="badge"><span class="dot dot--blue"></span>TypeScript / Bun</span>
+      <span class="badge"><span class="dot dot--purple"></span>AI-Assisted Development</span>
+      <span class="badge"><span class="dot dot--blue"></span>GitHub Actions Runtime</span>
+    </div>
+  </header>
+
+  <!-- About -->
+  <section class="reveal">
+    <div class="section-title">About</div>
+    <div class="card">
+      <h3>What Is GitHub Fabric?</h3>
+      <p>
+        GitHub Fabric starts with a stubbornly simple premise: GitHub isn't only a place to
+        store code — it can be the place code <em>becomes</em> a system. Not "CI for a repo,"
+        but <strong>repos as first-class, runnable infrastructure units</strong>.
+      </p>
+      <p style="margin-top:.6rem">
+        In a Fabric you don't just <em>reference</em> upstream projects. You <strong>ingest
+        them</strong>, <strong>splice in curated changes</strong>, and <strong>run them</strong> —
+        reliably, repeatedly, and by name — on top of GitHub Actions.
+      </p>
+    </div>
+  </section>
+
+  <!-- Architecture: Three Planes -->
+  <section class="reveal">
+    <div class="section-title">Architecture — The Three Planes</div>
+    <div class="grid grid-3">
+      <div class="card">
+        <h3>1 · Source Plane</h3>
+        <p>Faithful capture of upstream repos. Track origin + commit SHA; keep raw imports
+        segregated from runtime material. The source plane is for <em>truth</em>, not convenience.</p>
+      </div>
+      <div class="card">
+        <h3>2 · Transformation Plane</h3>
+        <p>Cull bulk, patch configs, normalize entry-points, and wrap modules with an adapter
+        contract — turning heterogeneous repos into consistent, driveable units.</p>
+      </div>
+      <div class="card">
+        <h3>3 · Execution Plane</h3>
+        <p>GitHub Actions is the runtime substrate: scheduled syncs, workflow-dispatch runs
+        by name, contract tests, artifact provenance, caching, and isolation.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DNA Metaphor -->
+  <section class="reveal">
+    <div class="section-title">Upstream DNA</div>
+    <div class="card">
+      <h3>Repos as Genetic Material</h3>
+      <p>
+        Most platforms treat upstream code like a dependency. GitHub Fabric treats it like
+        <strong>genetic material</strong> — something you import, normalize, and express under
+        controlled conditions.
+      </p>
+      <ul>
+        <li>Taking in source from one or many upstream repos</li>
+        <li>Splicing targeted edits — policy, structure, configs, adapters</li>
+        <li>Expressing a runnable form via a standardized entry-point</li>
+        <li>Preserving provenance — exact upstream commit, applied patches, and outputs</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Workflow Lifecycle -->
+  <section class="reveal">
+    <div class="section-title">Workflow Lifecycle</div>
+    <div class="card">
+      <h3>Resolve → Materialize → Validate → Execute → Emit</h3>
+      <div class="lifecycle">
+        <span>Resolve</span>
+        <span>Materialize</span>
+        <span>Validate</span>
+        <span>Execute</span>
+        <span>Emit</span>
+      </div>
+      <p style="margin-top:1rem">
+        Every run converts a module name into a spec, fetches upstream, applies cull + patch
+        rules, stamps provenance, runs contract tests, executes with constrained permissions,
+        and publishes artifacts.
+      </p>
+    </div>
+  </section>
+
+  <!-- Name Addressability -->
+  <section class="reveal">
+    <div class="section-title">Name Addressability</div>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>Modules</h3>
+        <p>Module names map to runnable capability. Trigger
+        <code style="color:var(--accent3)">run &lt;name&gt;</code> and the Fabric resolves
+        code, rules, environment, and workflow — then executes.</p>
+      </div>
+      <div class="card">
+        <h3>Templates</h3>
+        <p>Template names map to scaffolded new repos. The Fabric becomes a production line:
+        standard workflows, sane defaults, consistent structure.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Strategic Strengths -->
+  <section class="reveal">
+    <div class="section-title">Why It Matters</div>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>Curated Distribution</h3>
+        <p>Scattered capability becomes a shelf of approved, runnable modules.</p>
+      </div>
+      <div class="card">
+        <h3>Reviewable Upgrades</h3>
+        <p>Upstream changes arrive as PRs with diffs, test results, and pinned SHAs.</p>
+      </div>
+      <div class="card">
+        <h3>Reproducibility by Design</h3>
+        <p>Runs are tied to exact inputs and versions. "It broke" is always traceable.</p>
+      </div>
+      <div class="card">
+        <h3>Unified Governance</h3>
+        <p>Approvals, policies, audit trails, and secrets management live where the work executes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dependencies -->
+  <section class="reveal">
+    <div class="section-title">Dependencies</div>
+    <div class="card">
+      <h3>Runtime</h3>
+      <table class="dep-table">
+        <thead><tr><th>Package</th><th>Version</th><th>Role</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><a href="https://github.com/badlogic/pi-mono" target="_blank" rel="noopener">@mariozechner/pi-coding-agent</a></td>
+            <td>^0.52.5</td>
+            <td>Core AI agent — processes prompts, manages sessions</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Infrastructure</h3>
+      <table class="dep-table">
+        <thead><tr><th>Dependency</th><th>Role</th></tr></thead>
+        <tbody>
+          <tr><td>GitHub Actions</td><td>Sole compute runtime — every issue event triggers a workflow</td></tr>
+          <tr><td>GitHub Issues</td><td>Conversation interface — each issue maps to a persistent AI thread</td></tr>
+          <tr><td>Git</td><td>Memory &amp; storage layer — sessions, history, and edits committed</td></tr>
+          <tr><td><a href="https://bun.sh" target="_blank" rel="noopener">Bun</a></td><td>JS/TS runtime for the agent orchestrator</td></tr>
+          <tr><td><a href="https://cli.github.com" target="_blank" rel="noopener">gh CLI</a></td><td>GitHub API interaction — issues, comments, reactions</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h3>LLM Providers <span style="color:var(--muted);font-weight:400;font-size:.85rem">(one required)</span></h3>
+      <table class="dep-table">
+        <thead><tr><th>Provider</th><th>Models</th></tr></thead>
+        <tbody>
+          <tr><td><a href="https://platform.openai.com/" target="_blank" rel="noopener">OpenAI</a></td><td>GPT models (default provider)</td></tr>
+          <tr><td><a href="https://console.anthropic.com/" target="_blank" rel="noopener">Anthropic</a></td><td>Claude models</td></tr>
+          <tr><td><a href="https://aistudio.google.com/" target="_blank" rel="noopener">Google Gemini</a></td><td>Gemini 2.5 Pro &amp; Flash</td></tr>
+          <tr><td><a href="https://console.x.ai/" target="_blank" rel="noopener">xAI</a></td><td>Grok 3 &amp; Grok 3 Mini</td></tr>
+          <tr><td><a href="https://openrouter.ai/" target="_blank" rel="noopener">OpenRouter</a></td><td>DeepSeek &amp; hundreds of models</td></tr>
+          <tr><td><a href="https://console.mistral.ai/" target="_blank" rel="noopener">Mistral</a></td><td>Mistral Large &amp; others</td></tr>
+          <tr><td><a href="https://console.groq.com/" target="_blank" rel="noopener">Groq</a></td><td>Fast inference — open-source models</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Project Structure -->
+  <section class="reveal">
+    <div class="section-title">Project Structure</div>
+    <div class="card">
+      <pre style="color:var(--muted);font-size:.85rem;overflow-x:auto;line-height:1.8"><code>.github-fabric/           <span style="color:var(--accent)">Core agent framework</span>
+  .pi/                    <span style="color:var(--accent)">Agent personality, skills &amp; LLM config</span>
+  install/                <span style="color:var(--accent)">Setup scripts &amp; workflow templates</span>
+  lifecycle/              <span style="color:var(--accent)">Agent orchestrator &amp; runtime hooks</span>
+  state/                  <span style="color:var(--accent)">Git-tracked session history &amp; issue mappings</span>
+  public-fabric/          <span style="color:var(--accent)">This page — public repo showcase</span>
+
+.github/                  <span style="color:var(--accent)">GitHub Actions workflows &amp; issue templates</span></code></pre>
+    </div>
+  </section>
+
+  <!-- Contributing & Conduct -->
+  <section class="reveal">
+    <div class="section-title">Community</div>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>Contributing</h3>
+        <ul>
+          <li>Fork the repo &amp; create a branch from <code>main</code></li>
+          <li>Make small, reviewable increments</li>
+          <li>Test locally with <code>bun install</code></li>
+          <li>Open a PR with a clear description</li>
+        </ul>
+        <p style="margin-top:.6rem;font-size:.85rem">
+          Code is TypeScript, executed with Bun. Docs are Markdown.<br>
+          Every commit is permanent and auditable.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Code of Conduct</h3>
+        <p>Built on the principle that <strong>the active ingredient is human judgment</strong>.
+        The project follows the
+        <a class="link" href="https://www.contributor-covenant.org/" target="_blank" rel="noopener">Contributor Covenant</a>
+        extended by four governing laws:</p>
+        <ul>
+          <li><strong>Zeroth:</strong> Protect Humanity</li>
+          <li><strong>First:</strong> Do No Harm</li>
+          <li><strong>Second:</strong> Obey the Human</li>
+          <li><strong>Third:</strong> Preserve Integrity</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- License & Authors -->
+  <section class="reveal">
+    <div class="section-title">License &amp; Authors</div>
+    <div class="card">
+      <h3>MIT License — © 2026 Eric Mourant &amp; Sawyer Hood</h3>
+      <p>
+        Permission is hereby granted, free of charge, to any person obtaining a copy of this
+        software and associated documentation files, to deal in the Software without restriction,
+        including without limitation the rights to use, copy, modify, merge, publish, distribute,
+        sublicense, and/or sell copies.
+      </p>
+      <p style="margin-top:.5rem">
+        <a class="link" href="https://github.com/japer-technology/github-fabric/blob/main/LICENSE.md" target="_blank" rel="noopener">Full license text →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>
+      <a href="https://github.com/japer-technology/github-fabric" target="_blank" rel="noopener">
+        japer-technology/github-fabric
+      </a>
+      &nbsp;·&nbsp; Weaving Repositories into Infrastructure
+    </p>
+    <p style="margin-top:.3rem" id="gen-time"></p>
+  </footer>
+
+</div>
+
+<script>
+  // Scroll-reveal observer
+  document.addEventListener("DOMContentLoaded", function () {
+    var reveals = document.querySelectorAll(".reveal");
+    if ("IntersectionObserver" in window) {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      reveals.forEach(function (el) { observer.observe(el); });
+    } else {
+      reveals.forEach(function (el) { el.classList.add("visible"); });
+    }
+
+    // Timestamp
+    var el = document.getElementById("gen-time");
+    if (el) {
+      el.textContent = "Page loaded " + new Date().toLocaleString();
+    }
+  });
+</script>
 </body>
 </html>
