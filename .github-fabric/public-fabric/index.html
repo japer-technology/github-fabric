@@ -209,7 +209,7 @@
           var lines = block.lines.map(function (l) {
             if (!l.path && !l.comment) return "";
             var pad = l.path.length;
-            var spacer = new Array(Math.max(1, 26 - pad)).join(" ");
+            var spacer = " ".repeat(Math.max(0, 26 - pad));
             return l.path + spacer + '<span style="color:var(--accent)">' + l.comment + "</span>";
           }).join("\n");
           return '<pre style="color:var(--muted);font-size:.85rem;overflow-x:auto;line-height:1.8"><code>' + lines + "</code></pre>";
@@ -302,7 +302,7 @@
       .then(render)
       .catch(function (err) {
         document.getElementById("app").innerHTML =
-          '<p style="text-align:center;padding:4rem 1rem;color:var(--muted)">Unable to load status data. ' + esc(String(err)) + "</p>";
+          '<p style="text-align:center;padding:4rem 1rem;color:var(--muted)">Unable to load status data. ' + esc(err.message || String(err)) + "</p>";
       });
   })();
 </script>
