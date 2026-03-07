@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GitHub Fabric — japer-technology/github-fabric</title>
+<title>Loading…</title>
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   :root{
@@ -143,294 +143,168 @@
 </head>
 <body>
 <div class="bg-mesh"></div>
-<div class="page">
-
-  <!-- Hero -->
-  <header class="hero">
-    <img class="hero-logo" src="https://raw.githubusercontent.com/japer-technology/github-fabric/main/.github-fabric/logo.png" alt="GitHub Fabric logo">
-    <h1>GitHub Fabric</h1>
-    <p class="slug">japer-technology / github-fabric</p>
-    <p class="tagline">
-      A "GitHub&nbsp;as&nbsp;Infrastructure" meta-repo that ingests upstream repos, splices in
-      controlled modifications, and exposes each as a name-addressable, runnable module —
-      all powered by GitHub&nbsp;Actions.
-    </p>
-    <div class="badges">
-      <span class="badge"><span class="dot dot--green"></span>MIT License</span>
-      <span class="badge"><span class="dot dot--blue"></span>TypeScript / Bun</span>
-      <span class="badge"><span class="dot dot--purple"></span>AI-Assisted Development</span>
-      <span class="badge"><span class="dot dot--blue"></span>GitHub Actions Runtime</span>
-    </div>
-  </header>
-
-  <!-- About -->
-  <section class="reveal">
-    <div class="section-title">About</div>
-    <div class="card">
-      <h3>What Is GitHub Fabric?</h3>
-      <p>
-        GitHub Fabric starts with a stubbornly simple premise: GitHub isn't only a place to
-        store code — it can be the place code <em>becomes</em> a system. Not "CI for a repo,"
-        but <strong>repos as first-class, runnable infrastructure units</strong>.
-      </p>
-      <p style="margin-top:.6rem">
-        In a Fabric you don't just <em>reference</em> upstream projects. You <strong>ingest
-        them</strong>, <strong>splice in curated changes</strong>, and <strong>run them</strong> —
-        reliably, repeatedly, and by name — on top of GitHub Actions.
-      </p>
-    </div>
-  </section>
-
-  <!-- Architecture: Three Planes -->
-  <section class="reveal">
-    <div class="section-title">Architecture — The Three Planes</div>
-    <div class="grid grid-3">
-      <div class="card">
-        <h3>1 · Source Plane</h3>
-        <p>Faithful capture of upstream repos. Track origin + commit SHA; keep raw imports
-        segregated from runtime material. The source plane is for <em>truth</em>, not convenience.</p>
-      </div>
-      <div class="card">
-        <h3>2 · Transformation Plane</h3>
-        <p>Cull bulk, patch configs, normalize entry-points, and wrap modules with an adapter
-        contract — turning heterogeneous repos into consistent, driveable units.</p>
-      </div>
-      <div class="card">
-        <h3>3 · Execution Plane</h3>
-        <p>GitHub Actions is the runtime substrate: scheduled syncs, workflow-dispatch runs
-        by name, contract tests, artifact provenance, caching, and isolation.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- DNA Metaphor -->
-  <section class="reveal">
-    <div class="section-title">Upstream DNA</div>
-    <div class="card">
-      <h3>Repos as Genetic Material</h3>
-      <p>
-        Most platforms treat upstream code like a dependency. GitHub Fabric treats it like
-        <strong>genetic material</strong> — something you import, normalize, and express under
-        controlled conditions.
-      </p>
-      <ul>
-        <li>Taking in source from one or many upstream repos</li>
-        <li>Splicing targeted edits — policy, structure, configs, adapters</li>
-        <li>Expressing a runnable form via a standardized entry-point</li>
-        <li>Preserving provenance — exact upstream commit, applied patches, and outputs</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- Workflow Lifecycle -->
-  <section class="reveal">
-    <div class="section-title">Workflow Lifecycle</div>
-    <div class="card">
-      <h3>Resolve → Materialize → Validate → Execute → Emit</h3>
-      <div class="lifecycle">
-        <span>Resolve</span>
-        <span>Materialize</span>
-        <span>Validate</span>
-        <span>Execute</span>
-        <span>Emit</span>
-      </div>
-      <p style="margin-top:1rem">
-        Every run converts a module name into a spec, fetches upstream, applies cull + patch
-        rules, stamps provenance, runs contract tests, executes with constrained permissions,
-        and publishes artifacts.
-      </p>
-    </div>
-  </section>
-
-  <!-- Name Addressability -->
-  <section class="reveal">
-    <div class="section-title">Name Addressability</div>
-    <div class="grid grid-2">
-      <div class="card">
-        <h3>Modules</h3>
-        <p>Module names map to runnable capability. Trigger
-        <code style="color:var(--accent3)">run &lt;name&gt;</code> and the Fabric resolves
-        code, rules, environment, and workflow — then executes.</p>
-      </div>
-      <div class="card">
-        <h3>Templates</h3>
-        <p>Template names map to scaffolded new repos. The Fabric becomes a production line:
-        standard workflows, sane defaults, consistent structure.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Strategic Strengths -->
-  <section class="reveal">
-    <div class="section-title">Why It Matters</div>
-    <div class="grid grid-2">
-      <div class="card">
-        <h3>Curated Distribution</h3>
-        <p>Scattered capability becomes a shelf of approved, runnable modules.</p>
-      </div>
-      <div class="card">
-        <h3>Reviewable Upgrades</h3>
-        <p>Upstream changes arrive as PRs with diffs, test results, and pinned SHAs.</p>
-      </div>
-      <div class="card">
-        <h3>Reproducibility by Design</h3>
-        <p>Runs are tied to exact inputs and versions. "It broke" is always traceable.</p>
-      </div>
-      <div class="card">
-        <h3>Unified Governance</h3>
-        <p>Approvals, policies, audit trails, and secrets management live where the work executes.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Dependencies -->
-  <section class="reveal">
-    <div class="section-title">Dependencies</div>
-    <div class="card">
-      <h3>Runtime</h3>
-      <table class="dep-table">
-        <thead><tr><th>Package</th><th>Version</th><th>Role</th></tr></thead>
-        <tbody>
-          <tr>
-            <td><a href="https://github.com/badlogic/pi-mono" target="_blank" rel="noopener">@mariozechner/pi-coding-agent</a></td>
-            <td>^0.52.5</td>
-            <td>Core AI agent — processes prompts, manages sessions</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card">
-      <h3>Infrastructure</h3>
-      <table class="dep-table">
-        <thead><tr><th>Dependency</th><th>Role</th></tr></thead>
-        <tbody>
-          <tr><td>GitHub Actions</td><td>Sole compute runtime — every issue event triggers a workflow</td></tr>
-          <tr><td>GitHub Issues</td><td>Conversation interface — each issue maps to a persistent AI thread</td></tr>
-          <tr><td>Git</td><td>Memory &amp; storage layer — sessions, history, and edits committed</td></tr>
-          <tr><td><a href="https://bun.sh" target="_blank" rel="noopener">Bun</a></td><td>JS/TS runtime for the agent orchestrator</td></tr>
-          <tr><td><a href="https://cli.github.com" target="_blank" rel="noopener">gh CLI</a></td><td>GitHub API interaction — issues, comments, reactions</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card">
-      <h3>LLM Providers <span style="color:var(--muted);font-weight:400;font-size:.85rem">(one required)</span></h3>
-      <table class="dep-table">
-        <thead><tr><th>Provider</th><th>Models</th></tr></thead>
-        <tbody>
-          <tr><td><a href="https://platform.openai.com/" target="_blank" rel="noopener">OpenAI</a></td><td>GPT models (default provider)</td></tr>
-          <tr><td><a href="https://console.anthropic.com/" target="_blank" rel="noopener">Anthropic</a></td><td>Claude models</td></tr>
-          <tr><td><a href="https://aistudio.google.com/" target="_blank" rel="noopener">Google Gemini</a></td><td>Gemini 2.5 Pro &amp; Flash</td></tr>
-          <tr><td><a href="https://console.x.ai/" target="_blank" rel="noopener">xAI</a></td><td>Grok 3 &amp; Grok 3 Mini</td></tr>
-          <tr><td><a href="https://openrouter.ai/" target="_blank" rel="noopener">OpenRouter</a></td><td>DeepSeek &amp; hundreds of models</td></tr>
-          <tr><td><a href="https://console.mistral.ai/" target="_blank" rel="noopener">Mistral</a></td><td>Mistral Large &amp; others</td></tr>
-          <tr><td><a href="https://console.groq.com/" target="_blank" rel="noopener">Groq</a></td><td>Fast inference — open-source models</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- Project Structure -->
-  <section class="reveal">
-    <div class="section-title">Project Structure</div>
-    <div class="card">
-      <pre style="color:var(--muted);font-size:.85rem;overflow-x:auto;line-height:1.8"><code>.github-fabric/           <span style="color:var(--accent)">Core agent framework</span>
-  .pi/                    <span style="color:var(--accent)">Agent personality, skills &amp; LLM config</span>
-  install/                <span style="color:var(--accent)">Setup scripts &amp; workflow templates</span>
-  lifecycle/              <span style="color:var(--accent)">Agent orchestrator &amp; runtime hooks</span>
-  state/                  <span style="color:var(--accent)">Git-tracked session history &amp; issue mappings</span>
-  public-fabric/          <span style="color:var(--accent)">This page — public repo showcase</span>
-
-.github/                  <span style="color:var(--accent)">GitHub Actions workflows &amp; issue templates</span></code></pre>
-    </div>
-  </section>
-
-  <!-- Contributing & Conduct -->
-  <section class="reveal">
-    <div class="section-title">Community</div>
-    <div class="grid grid-2">
-      <div class="card">
-        <h3>Contributing</h3>
-        <ul>
-          <li>Fork the repo &amp; create a branch from <code>main</code></li>
-          <li>Make small, reviewable increments</li>
-          <li>Test locally with <code>bun install</code></li>
-          <li>Open a PR with a clear description</li>
-        </ul>
-        <p style="margin-top:.6rem;font-size:.85rem">
-          Code is TypeScript, executed with Bun. Docs are Markdown.<br>
-          Every commit is permanent and auditable.
-        </p>
-      </div>
-      <div class="card">
-        <h3>Code of Conduct</h3>
-        <p>Built on the principle that <strong>the active ingredient is human judgment</strong>.
-        The project follows the
-        <a class="link" href="https://www.contributor-covenant.org/" target="_blank" rel="noopener">Contributor Covenant</a>
-        extended by four governing laws:</p>
-        <ul>
-          <li><strong>Zeroth:</strong> Protect Humanity</li>
-          <li><strong>First:</strong> Do No Harm</li>
-          <li><strong>Second:</strong> Obey the Human</li>
-          <li><strong>Third:</strong> Preserve Integrity</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- License & Authors -->
-  <section class="reveal">
-    <div class="section-title">License &amp; Authors</div>
-    <div class="card">
-      <h3>MIT License — © 2026 Eric Mourant &amp; Sawyer Hood</h3>
-      <p>
-        Permission is hereby granted, free of charge, to any person obtaining a copy of this
-        software and associated documentation files, to deal in the Software without restriction,
-        including without limitation the rights to use, copy, modify, merge, publish, distribute,
-        sublicense, and/or sell copies.
-      </p>
-      <p style="margin-top:.5rem">
-        <a class="link" href="https://github.com/japer-technology/github-fabric/blob/main/LICENSE.md" target="_blank" rel="noopener">Full license text →</a>
-      </p>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <p>
-      <a href="https://github.com/japer-technology/github-fabric" target="_blank" rel="noopener">
-        japer-technology/github-fabric
-      </a>
-      &nbsp;·&nbsp; Weaving Repositories into Infrastructure
-    </p>
-    <p style="margin-top:.3rem" id="gen-time"></p>
-  </footer>
-
-</div>
+<div class="page" id="app"></div>
 
 <script>
-  // Scroll-reveal observer
-  document.addEventListener("DOMContentLoaded", function () {
-    var reveals = document.querySelectorAll(".reveal");
-    if ("IntersectionObserver" in window) {
-      var observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.12 });
-      reveals.forEach(function (el) { observer.observe(el); });
-    } else {
-      reveals.forEach(function (el) { el.classList.add("visible"); });
+  (function () {
+    "use strict";
+
+    /* ── Helpers ── */
+    function esc(str) {
+      var d = document.createElement("div");
+      d.appendChild(document.createTextNode(str));
+      return d.innerHTML;
     }
 
-    // Timestamp
-    var el = document.getElementById("gen-time");
-    if (el) {
-      el.textContent = "Page loaded " + new Date().toLocaleString();
+    function applyTheme(theme) {
+      var root = document.documentElement.style;
+      var map = {
+        bg: "--bg", surface: "--surface", border: "--border",
+        text: "--text", muted: "--muted", accent: "--accent",
+        accent2: "--accent2", accent3: "--accent3", glow: "--glow",
+        radius: "--radius"
+      };
+      for (var key in map) {
+        if (theme[key] != null) root.setProperty(map[key], theme[key]);
+      }
     }
-  });
+
+    /* ── Content renderers ── */
+    function renderBadges(badges) {
+      return '<div class="badges">' +
+        badges.map(function (b) {
+          return '<span class="badge"><span class="dot dot--' + esc(b.color) + '"></span>' + esc(b.label) + '</span>';
+        }).join("") +
+        '</div>';
+    }
+
+    function renderContentBlock(block) {
+      switch (block.type) {
+        case "paragraph":
+          var style = block.style ? ' style="' + esc(block.style) + '"' : "";
+          return "<p" + style + ">" + block.html + "</p>";
+
+        case "list":
+          return "<ul>" +
+            block.items.map(function (item) { return "<li>" + item + "</li>"; }).join("") +
+            "</ul>";
+
+        case "table":
+          var h = "<thead><tr>" +
+            block.headers.map(function (th) { return "<th>" + esc(th) + "</th>"; }).join("") +
+            "</tr></thead>";
+          var b = "<tbody>" +
+            block.rows.map(function (row) {
+              return "<tr>" + row.map(function (cell) { return "<td>" + cell + "</td>"; }).join("") + "</tr>";
+            }).join("") +
+            "</tbody>";
+          return '<table class="dep-table">' + h + b + "</table>";
+
+        case "lifecycle":
+          return '<div class="lifecycle">' +
+            block.steps.map(function (s) { return "<span>" + esc(s) + "</span>"; }).join("") +
+            "</div>";
+
+        case "codeblock":
+          var lines = block.lines.map(function (l) {
+            if (!l.path && !l.comment) return "";
+            var pad = l.path.length;
+            var spacer = " ".repeat(Math.max(0, 26 - pad));
+            return l.path + spacer + '<span style="color:var(--accent)">' + l.comment + "</span>";
+          }).join("\n");
+          return '<pre style="color:var(--muted);font-size:.85rem;overflow-x:auto;line-height:1.8"><code>' + lines + "</code></pre>";
+
+        default:
+          return "";
+      }
+    }
+
+    function renderCard(card) {
+      var html = '<div class="card">';
+      if (card.heading) {
+        html += "<h3>" + card.heading;
+        if (card.headingSuffix) {
+          html += ' <span style="color:var(--muted);font-weight:400;font-size:.85rem">' + esc(card.headingSuffix) + "</span>";
+        }
+        html += "</h3>";
+      }
+      if (card.content) {
+        card.content.forEach(function (block) { html += renderContentBlock(block); });
+      }
+      return html + "</div>";
+    }
+
+    function renderSection(section) {
+      var html = '<section class="reveal"><div class="section-title">' + section.title + "</div>";
+      if (section.grid) {
+        html += '<div class="grid ' + esc(section.grid) + '">';
+        section.cards.forEach(function (c) { html += renderCard(c); });
+        html += "</div>";
+      } else {
+        section.cards.forEach(function (c) { html += renderCard(c); });
+      }
+      return html + "</section>";
+    }
+
+    /* ── Main render ── */
+    function render(data) {
+      if (data.meta && data.meta.title) document.title = data.meta.title;
+      if (data.theme) applyTheme(data.theme);
+
+      var hero = data.hero;
+      var html = '<header class="hero">';
+      html += '<img class="hero-logo" src="' + esc(hero.logoUrl) + '" alt="' + esc(hero.logoAlt) + '">';
+      html += "<h1>" + esc(hero.title) + "</h1>";
+      html += '<p class="slug">' + esc(hero.slug) + "</p>";
+      html += '<p class="tagline">' + hero.tagline + "</p>";
+      if (hero.badges) html += renderBadges(hero.badges);
+      html += "</header>";
+
+      data.sections.forEach(function (s) { html += renderSection(s); });
+
+      var f = data.footer;
+      html += "<footer><p>";
+      html += '<a href="' + esc(f.repoUrl) + '" target="_blank" rel="noopener">' + esc(f.repoName) + "</a>";
+      html += "&nbsp;\u00b7&nbsp; " + esc(f.tagline);
+      html += '</p><p style="margin-top:.3rem" id="gen-time"></p></footer>';
+
+      document.getElementById("app").innerHTML = html;
+
+      initReveal();
+      var gt = document.getElementById("gen-time");
+      if (gt) gt.textContent = "Page loaded " + new Date().toLocaleString();
+    }
+
+    /* ── Scroll-reveal observer ── */
+    function initReveal() {
+      var reveals = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+        reveals.forEach(function (el) { observer.observe(el); });
+      } else {
+        reveals.forEach(function (el) { el.classList.add("visible"); });
+      }
+    }
+
+    /* ── Fetch status.json and render ── */
+    fetch("status.json")
+      .then(function (res) {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.json();
+      })
+      .then(render)
+      .catch(function (err) {
+        document.getElementById("app").innerHTML =
+          '<p style="text-align:center;padding:4rem 1rem;color:var(--muted)">Unable to load status data. ' + esc(err.message || String(err)) + "</p>";
+      });
+  })();
 </script>
 </body>
 </html>
