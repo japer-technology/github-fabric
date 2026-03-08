@@ -83,6 +83,7 @@ Deep-dive analysis of specific repositories rethought through the Fabric's archi
 | Analysis | Description |
 |----------|-------------|
 | [Agenticana](./repo/agenticana/index.md) | A 20-agent Sovereign AI Developer OS rethought from the Fabric point of view — multi-agent routing, shared memory, swarm execution, governance composition, and cost management. |
+| [OpenClaw](./repo/openclaw/index.md) | A multi-channel personal AI assistant rethought from the Fabric point of view — persistent gateway distillation, channel reduction, plugin composition, governance alignment, and cost management. |
 
 ---
 
