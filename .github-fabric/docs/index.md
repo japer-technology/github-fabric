@@ -85,6 +85,7 @@ Deep-dive analysis of specific repositories rethought through the Fabric's archi
 | [Agenticana](./repo/agenticana/index.md) | A 20-agent Sovereign AI Developer OS rethought from the Fabric point of view — multi-agent routing, shared memory, swarm execution, governance composition, and cost management. |
 | [OpenClaw](./repo/openclaw/index.md) | A multi-channel personal AI assistant rethought from the Fabric point of view — persistent gateway distillation, channel reduction, plugin composition, governance alignment, and cost management. |
 | [Pi-Mono](./repo/pi-mono/index.md) | A monorepo AI agent toolkit rethought from the Fabric point of view — toolkit as substrate, radical extensibility under governance, provider abstraction with model discipline, branching sessions as memory, self-managing agents, and terminal-to-repository transformation. |
+| [NanoClaw](./repo/nanoclaw/index.md) | A minimalist personal AI assistant rethought from the Fabric point of view — AI-legibility, container isolation, skills-as-code-transformation, anti-complexity, and the last mile to a Fabric module. |
 
 ---
 
