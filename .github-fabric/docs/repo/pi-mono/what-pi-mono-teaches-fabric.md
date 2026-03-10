@@ -128,7 +128,7 @@ Pi-mono is the canonical toolkit analysis. It reveals the building blocks — pr
 
 ---
 
-## 8. Summary: Seven Things the Fabric Learns
+## 8. Summary: The Seven Lessons
 
 | # | Lesson | Source | Implication |
 |---|--------|--------|-------------|
