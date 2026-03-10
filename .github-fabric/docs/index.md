@@ -86,6 +86,7 @@ Deep-dive analysis of specific repositories rethought through the Fabric's archi
 | [OpenClaw](./repo/openclaw/index.md) | A multi-channel personal AI assistant rethought from the Fabric point of view — persistent gateway distillation, channel reduction, plugin composition, governance alignment, and cost management. |
 | [Pi-Mono](./repo/pi-mono/index.md) | A monorepo AI agent toolkit rethought from the Fabric point of view — toolkit as substrate, radical extensibility under governance, provider abstraction with model discipline, branching sessions as memory, self-managing agents, and terminal-to-repository transformation. |
 | [NanoClaw](./repo/nanoclaw/index.md) | A minimalist personal AI assistant rethought from the Fabric point of view — AI-legibility, container isolation, skills-as-code-transformation, anti-complexity, and the last mile to a Fabric module. |
+| [OpenAI Node](./repo/openai-node/index.md) | The official OpenAI TypeScript SDK rethought from the Fabric point of view — vendor dependency as governance question, code generation as architecture, the SDK as trust boundary, and the economics of metered external intelligence. |
 | [OpenAI Codex](./repo/openai-codex/index.md) | A terminal-native coding agent from OpenAI rethought from the Fabric point of view — OS-level sandboxing, graduated approval modes, AGENTS.md as committed memory, pre-built Rust binary economics, and the vendor's agent body vs. the repository as the mind. |
 
 ---
