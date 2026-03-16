@@ -89,6 +89,7 @@ Deep-dive analysis of specific repositories rethought through the Fabric's archi
 | [OpenAI Node](./repo/openai-node/index.md) | The official OpenAI TypeScript SDK rethought from the Fabric point of view — vendor dependency as governance question, code generation as architecture, the SDK as trust boundary, and the economics of metered external intelligence. |
 | [OpenAI Codex](./repo/openai-codex/index.md) | A terminal-native coding agent from OpenAI rethought from the Fabric point of view — OS-level sandboxing, graduated approval modes, AGENTS.md as committed memory, pre-built Rust binary economics, and the vendor's agent body vs. the repository as the mind. |
 | [Kilocode](./repo/kilocode/index.md) | The #1 coding agent on OpenRouter rethought from the Fabric point of view — platform as agent, forked identity from OpenCode, multi-surface architecture reduced to a single governed surface, 500+ model marketplace under committed governance, agentic orchestration with git worktree isolation, and the commercial mind vs. the governed mind. |
+| [Moltis](./repo/moltis/index.md) | A local-first AI gateway in Rust rethought from the Fabric point of view — sovereignty vs. governance, 46-crate modular architecture with zero unsafe code, multi-channel collapse to a single governed surface, encrypted vault vs. platform secrets, the gateway pattern vs. ephemeral invocation, and accountable independence. |
 
 ---
 
